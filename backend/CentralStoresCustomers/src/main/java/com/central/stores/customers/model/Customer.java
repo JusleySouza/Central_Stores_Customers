@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.central.stores.customers.constants.Conf;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -37,9 +39,9 @@ public class Customer {
 	@Column(nullable = false )
 	private String gender;
 	@Column(nullable = false )
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date created;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
 	
 	

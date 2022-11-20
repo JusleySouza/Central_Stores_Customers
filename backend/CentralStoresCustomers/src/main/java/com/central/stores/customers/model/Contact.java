@@ -11,6 +11,8 @@ import javax.persistence.Id;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.central.stores.customers.constants.Conf;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,9 +32,9 @@ public class Contact {
 	@Column(nullable = false )
 	private String email;
 	@Column(nullable = false )
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date created;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
 	
 }
