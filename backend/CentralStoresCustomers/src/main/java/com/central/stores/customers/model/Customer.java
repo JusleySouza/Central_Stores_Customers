@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.central.stores.customers.constants.Conf;
+import com.central.stores.customers.model.dto.RequestCustomerDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -52,5 +53,14 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressId")
 	private Address address;
+	
+	public void transformRequestCustomerDTOToModel(RequestCustomerDTO requestCustomerDTO) {
+		this.name = requestCustomerDTO.getName();
+		this.cpf = requestCustomerDTO.getCpf();
+		this.rg = requestCustomerDTO.getRg();
+		this.gender = requestCustomerDTO.getGender();
+		this.created = new Date();
+		
+	}
 	
 }
