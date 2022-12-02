@@ -40,15 +40,14 @@ public class Customer {
 	@Column(nullable = false )
 	private String gender;
 	@Column(nullable = false )
+	private String phone;
+	@Column(nullable = false )
+	private String email;
+	@Column(nullable = false )
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
-	
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "contactId")
-	private Contact contact;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressId")
@@ -59,6 +58,8 @@ public class Customer {
 		this.cpf = requestCustomerDTO.getCpf();
 		this.rg = requestCustomerDTO.getRg();
 		this.gender = requestCustomerDTO.getGender();
+		this.phone = requestCustomerDTO.getPhone();
+		this.email = requestCustomerDTO.getEmail();
 		this.created = new Date();
 		
 	}
