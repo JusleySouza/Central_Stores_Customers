@@ -16,5 +16,7 @@ public class RequestCustomerDTO {
 	private String cpf;
 	private String rg;
 	private String gender;
+	private String phone;
+	private String email;
 
 }
