@@ -1,5 +1,6 @@
 package com.central.stores.employees.services.implement;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +43,7 @@ public class AddressServicesImplent implements AddressServices {
 	}
 
 	@Override
-	public ResponseEntity<AddressDTO> create(AddressDTO requestAddressDTO, UUID employeeId) {
+	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID employeeId) {
 		employee = new Employee();
 		address = new Address();
 
@@ -56,19 +57,36 @@ public class AddressServicesImplent implements AddressServices {
 		
 		LoggerConfig.LOGGER_ADDRESS.info("Endereço do funcionário " + employee.getName() + " salvo com sucesso!!!");
 
-		return new ResponseEntity<AddressDTO>(HttpStatus.CREATED);
+		return new ResponseEntity<Address>(address, HttpStatus.CREATED);
 	}
 
 	@Override
-	public ResponseEntity<AddressDTO> update(AddressDTO requestAddressDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId) {
+		address = addressRepository.findById(addressId).get();
+		address = updateModel(address, requestAddressDTO);
+		
+		addressRepository.save(address);
+		
+		LoggerConfig.LOGGER_ADDRESS.info("Endereço atualizado com sucesso!!!");
+		
+		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<AddressDTO> delete(UUID id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private Address updateModel(Address address, AddressDTO requestAddressDTO) {
+		
+		address.setStreet(requestAddressDTO.getStreet());
+		address.setNumber(requestAddressDTO.getNumber());
+		address.setNeighborhood(requestAddressDTO.getNeighborhood());
+		address.setCity(requestAddressDTO.getCity());
+		address.setChanged(new Date());
+		
+		return address;
 	}
 
 }
