@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.central.stores.employees.constants.Conf;
+import com.central.stores.employees.model.dto.RequestEmployeeDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -43,16 +44,28 @@ public class Employee {
 	@Column(nullable = false)
 	private Boolean active;
 	@Column(nullable = false)
+	private String phone;
+	@Column(nullable = false)
+	private String email;
+	@Column(nullable = false)
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "contactId")
-	private Contact contact;
-
-	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressId")
 	private Address address;
+
+	public void transformRequestEmployeeDTOToModel(RequestEmployeeDTO requestEmployeeDTO) {
+		this.created = new Date();
+		this.active = Boolean.TRUE;
+		this.rg = requestEmployeeDTO.getRg();
+		this.cpf = requestEmployeeDTO.getCpf();
+		this.name = requestEmployeeDTO.getName();
+		this.role = requestEmployeeDTO.getRole();
+		this.email = requestEmployeeDTO.getEmail();
+		this.phone = requestEmployeeDTO.getPhone();
+		this.gender = requestEmployeeDTO.getGender();
+	}
 }
