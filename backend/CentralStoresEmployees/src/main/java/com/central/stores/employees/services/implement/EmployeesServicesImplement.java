@@ -52,14 +52,31 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	}
 
 	@Override
-	public ResponseEntity<Employee> update(RequestEmployeeDTO employeeDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ResponseEmployeeDTO> update(RequestEmployeeDTO requestEmployeeDTO, UUID employeeId) {
+		employee = repository.findById(employeeId).get();
+		employee = updateModel(employee, requestEmployeeDTO);
+		
+		repository.save(employee);
+		
+		return new ResponseEntity<ResponseEmployeeDTO>(HttpStatus.NO_CONTENT);
 	}
 
 	@Override
-	public ResponseEntity<Employee> delete(UUID id) {
+	public ResponseEntity<ResponseEmployeeDTO> delete(UUID id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private Employee updateModel(Employee employee, RequestEmployeeDTO requestEmployeeDTO) {
+		employee.setRg(requestEmployeeDTO.getRg());
+		employee.setCpf(requestEmployeeDTO.getCpf());
+		employee.setName(requestEmployeeDTO.getName());
+		employee.setRole(requestEmployeeDTO.getRole());
+		employee.setPhone(requestEmployeeDTO.getPhone());
+		employee.setEmail(requestEmployeeDTO.getEmail());
+		employee.setGender(requestEmployeeDTO.getGender());
+		
+		return employee;
+		
 	}
 }
