@@ -19,7 +19,7 @@ public interface EmployeesServices {
 	
 	public ResponseEntity<ResponseEmployeeDTO> create(RequestEmployeeDTO requestEmployeeDTO);
 	
-	public ResponseEntity<Employee> update(RequestEmployeeDTO employeeDTO);
+	public ResponseEntity<ResponseEmployeeDTO> update(RequestEmployeeDTO requestEmployeeDTO, UUID employeeId);
 	
-	public ResponseEntity<Employee> delete(UUID id);
+	public ResponseEntity<ResponseEmployeeDTO> delete(UUID id);
 }
