@@ -12,14 +12,14 @@ import com.central.stores.customers.model.dto.AddressDTO;
 @Service
 public interface AddressServices {
 
-	public ResponseEntity<List<Address>> findAll();
+	public ResponseEntity<List<AddressDTO>> findAll();
 
-	public ResponseEntity<Address> findById(UUID id);
+	public ResponseEntity<AddressDTO> findById(UUID id);
 
-	public ResponseEntity<AddressDTO> create(AddressDTO requestAddressDTO, UUID customerId);
+	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID customerId);
 
-	public ResponseEntity<Address> update(AddressDTO requestAddressDTO);
+	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId );
 
-	public ResponseEntity<Address> delete(UUID id);
+	public ResponseEntity<AddressDTO> delete(UUID id);
 	
 }
