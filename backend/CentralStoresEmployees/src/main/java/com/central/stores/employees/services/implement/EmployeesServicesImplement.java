@@ -57,14 +57,19 @@ public class EmployeesServicesImplement implements EmployeesServices {
 
 	@Override
 	public ResponseEntity<ResponseEmployeeDTO> update(RequestEmployeeDTO requestEmployeeDTO, UUID employeeId) {
+		responseEmployeeDTO = new ResponseEmployeeDTO();
+		
 		employee = repository.findById(employeeId).get();
 		employee = updateModel(employee, requestEmployeeDTO);
 		
 		repository.save(employee);
 		
+		responseEmployeeDTO.transformModelToResponseEmployeeDTO(employee);
+		
+		
 		LoggerConfig.LOGGER_EMPLOYEE.info("Dados do funcionário " + employee.getName() + " atualizados com sucesso!!!");
 		
-		return new ResponseEntity<ResponseEmployeeDTO>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<ResponseEmployeeDTO>(responseEmployeeDTO, HttpStatus.OK);
 	}
 
 	@Override
