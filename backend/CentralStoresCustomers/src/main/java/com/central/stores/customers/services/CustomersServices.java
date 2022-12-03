@@ -13,14 +13,14 @@ import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 @Service
 public interface CustomersServices {
 
-public ResponseEntity<List<Customer>> findAll();
-	
+	public ResponseEntity<List<Customer>> findAll();
+
 	public ResponseEntity<Customer> findById(UUID id);
-	
+
 	public ResponseEntity<ResponseCustomerDTO> create(RequestCustomerDTO requestCustomerDTO);
-	
+
 	public ResponseEntity<Customer> update(RequestCustomerDTO requestCustomerDTO);
-	
+
 	public ResponseEntity<Customer> delete(UUID id);
-	
+
 }
