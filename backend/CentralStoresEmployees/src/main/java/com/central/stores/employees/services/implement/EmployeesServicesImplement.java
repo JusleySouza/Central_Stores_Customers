@@ -1,5 +1,6 @@
 package com.central.stores.employees.services.implement;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,6 +69,7 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	}
 	
 	private Employee updateModel(Employee employee, RequestEmployeeDTO requestEmployeeDTO) {
+		employee.setChanged(new Date());
 		employee.setRg(requestEmployeeDTO.getRg());
 		employee.setCpf(requestEmployeeDTO.getCpf());
 		employee.setName(requestEmployeeDTO.getName());
