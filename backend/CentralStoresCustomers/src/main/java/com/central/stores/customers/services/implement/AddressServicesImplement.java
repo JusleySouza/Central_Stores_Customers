@@ -1,5 +1,6 @@
 package com.central.stores.customers.services.implement;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,17 +30,17 @@ public class AddressServicesImplement implements AddressServices {
 	Customer customer;
 
 	@Override
-	public ResponseEntity<List<Address>> findAll() {
+	public ResponseEntity<List<AddressDTO>> findAll() {
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<Address> findById(UUID id) {
+	public ResponseEntity<AddressDTO> findById(UUID id) {
 		return null;
 	}
 
 	@Override
-	public ResponseEntity<AddressDTO> create(AddressDTO requestAddressDTO, UUID customerId) {
+	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID customerId) {
 		address = new Address();
 		customer = new Customer();
 		address.transformRequestAddressDTOToModel(requestAddressDTO);
@@ -48,18 +49,30 @@ public class AddressServicesImplement implements AddressServices {
 		customer.setAddress(address);
 		customerRepository.save(customer);
 		LoggerConfig.LOGGER_ADDRESS.info("Endereço do cliente " + customer.getName() + " salvo com sucesso!!");
-		return new ResponseEntity<AddressDTO>(HttpStatus.CREATED);
+		return new ResponseEntity<Address>(address, HttpStatus.CREATED);
 	}
 
 	@Override
-	public ResponseEntity<Address> update(AddressDTO requestAddressDTO) {
-
-		return null;
+	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId) {
+		address = addressRepository.findById(addressId).get();
+		address = updateModel(address, requestAddressDTO);
+		addressRepository.save(address);
+		LoggerConfig.LOGGER_ADDRESS.info("Endereço atualizado com sucesso!!");
+		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<Address> delete(UUID id) {
+	public ResponseEntity<AddressDTO> delete(UUID id) {
 		return null;
+	}
+	
+	private Address updateModel(Address address, AddressDTO requestAddressDTO) {
+		address.setStreet(requestAddressDTO.getStreet());
+		address.setNumber(requestAddressDTO.getNumber());
+		address.setNeighborhood(requestAddressDTO.getNeighborhood());
+		address.setCity(requestAddressDTO.getCity());
+		address.setChanged(new Date());
+		return address;
 	}
 
 }
