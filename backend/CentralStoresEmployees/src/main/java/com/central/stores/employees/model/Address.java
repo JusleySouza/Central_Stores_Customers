@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.central.stores.employees.constants.Conf;
+import com.central.stores.employees.model.dto.AddressDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -39,4 +40,12 @@ public class Address {
 	private Date created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
+	
+	public void transformRequestAddressDTOToModel(AddressDTO requestAddressDTO) {
+		this.street = requestAddressDTO.getStreet();
+		this.number = requestAddressDTO.getNumber();
+		this.neighborhood = requestAddressDTO.getNeighborhood();
+		this.city = requestAddressDTO.getCity();
+		this.created = new Date();
+	}
 }
