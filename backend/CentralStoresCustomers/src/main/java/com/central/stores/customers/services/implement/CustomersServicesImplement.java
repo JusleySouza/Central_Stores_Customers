@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.central.stores.customers.model.Customer;
+import com.central.stores.customers.model.dto.AddressDTO;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.repository.CustomersRepository;
@@ -50,18 +51,28 @@ public class CustomersServicesImplement implements CustomersServices {
 	}
 
 	@Override
-	public ResponseEntity<Customer> update(RequestCustomerDTO requestCustomerDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ResponseCustomerDTO> update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
+		customer = repository.findById(customerId).get();
+		customer = updateModel(customer, requestCustomerDTO);
+		repository.save(customer);
+		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
 	}
 
 	@Override
-	public ResponseEntity<Customer> delete(UUID id) {
+	public ResponseEntity<ResponseCustomerDTO> delete(UUID id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
-	
+	private Customer updateModel(Customer customer, RequestCustomerDTO requestCustomerDTO) {
+		customer.setName(requestCustomerDTO.getName());
+		customer.setCpf(requestCustomerDTO.getCpf());
+		customer.setRg(requestCustomerDTO.getRg());
+		customer.setGender(requestCustomerDTO.getGender());
+		customer.setPhone(requestCustomerDTO.getPhone());
+		customer.setEmail(requestCustomerDTO.getEmail());
+		return customer;
+	}
 	
 }
