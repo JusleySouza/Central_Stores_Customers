@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.central.stores.employees.config.LoggerConfig;
 import com.central.stores.employees.model.Address;
 import com.central.stores.employees.model.Employee;
 import com.central.stores.employees.model.dto.AddressDTO;
@@ -52,6 +53,8 @@ public class AddressServicesImplent implements AddressServices {
 		employee.setAddress(address);
 		
 		employeesRepository.save(employee);
+		
+		LoggerConfig.LOGGER_ADDRESS.info("Endereço do funcionário " + employee.getName() + " salvo com sucesso!!!");
 
 		return new ResponseEntity<AddressDTO>(HttpStatus.CREATED);
 	}

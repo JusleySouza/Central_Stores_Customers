@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.central.stores.employees.config.LoggerConfig;
 import com.central.stores.employees.model.Employee;
 import com.central.stores.employees.model.dto.RequestEmployeeDTO;
 import com.central.stores.employees.model.dto.ResponseEmployeeDTO;
@@ -47,7 +48,9 @@ public class EmployeesServicesImplement implements EmployeesServices {
 		repository.save(employee);
 		
 		responseEmployeeDTO.transformModelToResponseEmployeeDTO(employee);
-
+		
+		LoggerConfig.LOGGER_EMPLOYEE.info("Funcionário " + employee.getName() + " salvo com sucesso!!!");
+		
 		return new ResponseEntity<ResponseEmployeeDTO>(responseEmployeeDTO, HttpStatus.CREATED);
 
 	}
@@ -58,6 +61,8 @@ public class EmployeesServicesImplement implements EmployeesServices {
 		employee = updateModel(employee, requestEmployeeDTO);
 		
 		repository.save(employee);
+		
+		LoggerConfig.LOGGER_EMPLOYEE.info("Dados do funcionário " + employee.getName() + " atualizados com sucesso!!!");
 		
 		return new ResponseEntity<ResponseEmployeeDTO>(HttpStatus.NO_CONTENT);
 	}
