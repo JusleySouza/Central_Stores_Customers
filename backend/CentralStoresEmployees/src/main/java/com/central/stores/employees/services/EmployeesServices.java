@@ -1,0 +1,25 @@
+package com.central.stores.employees.services;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.central.stores.employees.model.Employee;
+import com.central.stores.employees.model.dto.RequestEmployeeDTO;
+import com.central.stores.employees.model.dto.ResponseEmployeeDTO;
+
+@Service
+public interface EmployeesServices {
+
+	public ResponseEntity<List<Employee>> findAll();
+	
+	public ResponseEntity<Employee> findById(UUID id);
+	
+	public ResponseEntity<ResponseEmployeeDTO> create(RequestEmployeeDTO requestEmployeeDTO);
+	
+	public ResponseEntity<Employee> update(RequestEmployeeDTO employeeDTO);
+	
+	public ResponseEntity<Employee> delete(UUID id);
+}
