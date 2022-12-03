@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.central.stores.customers.config.LoggerConfig;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
@@ -40,12 +41,11 @@ public class CustomersServicesImplement implements CustomersServices {
 	public ResponseEntity<ResponseCustomerDTO> create(RequestCustomerDTO requestCustomerDTO) {
 		customer = new Customer();
 		responseCustomerDTO = new ResponseCustomerDTO();
-		
 		customer.transformRequestCustomerDTOToModel(requestCustomerDTO);
-		
 		repository.save(customer);
-		
 		responseCustomerDTO.transformModelToResponseCustomerDTO(customer);
+		
+		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " salvo com sucesso!!");
 		
 		return new ResponseEntity<ResponseCustomerDTO>(responseCustomerDTO, HttpStatus.CREATED);
 	}
@@ -55,6 +55,9 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer = repository.findById(customerId).get();
 		customer = updateModel(customer, requestCustomerDTO);
 		repository.save(customer);
+		
+		LoggerConfig.LOGGER_CUSTOMER.info("Dados do cliente " + customer.getName() + " salvo com sucesso!!");
+		
 		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
 	}
 
