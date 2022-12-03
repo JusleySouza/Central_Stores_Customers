@@ -11,7 +11,6 @@ import lombok.ToString;
 @ToString
 public class RequestCustomerDTO {
 
-	private UUID id;
 	private String name;
 	private String cpf;
 	private String rg;
