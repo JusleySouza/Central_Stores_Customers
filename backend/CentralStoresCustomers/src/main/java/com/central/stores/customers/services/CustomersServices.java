@@ -19,8 +19,8 @@ public interface CustomersServices {
 
 	public ResponseEntity<ResponseCustomerDTO> create(RequestCustomerDTO requestCustomerDTO);
 
-	public ResponseEntity<Customer> update(RequestCustomerDTO requestCustomerDTO);
+	public ResponseEntity<ResponseCustomerDTO> update(RequestCustomerDTO requestCustomerDTO, UUID customerId);
 
-	public ResponseEntity<Customer> delete(UUID id);
+	public ResponseEntity<ResponseCustomerDTO> delete(UUID id);
 
 }
