@@ -15,11 +15,11 @@ public interface EmployeesServices {
 
 	public ResponseEntity<List<Employee>> findAll();
 	
-	public ResponseEntity<Employee> findById(UUID id);
+	public ResponseEntity<Employee> findById(UUID employeeId);
 	
 	public ResponseEntity<ResponseEmployeeDTO> create(RequestEmployeeDTO requestEmployeeDTO);
 	
 	public ResponseEntity<ResponseEmployeeDTO> update(RequestEmployeeDTO requestEmployeeDTO, UUID employeeId);
 	
-	public ResponseEntity<ResponseEmployeeDTO> delete(UUID id);
+	public ResponseEntity<ResponseEmployeeDTO> delete(UUID employeeId);
 }
