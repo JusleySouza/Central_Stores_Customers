@@ -1,5 +1,6 @@
 package com.central.stores.customers.services.implement;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.central.stores.customers.model.Customer;
-import com.central.stores.customers.model.dto.AddressDTO;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.repository.CustomersRepository;
@@ -72,6 +72,7 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer.setGender(requestCustomerDTO.getGender());
 		customer.setPhone(requestCustomerDTO.getPhone());
 		customer.setEmail(requestCustomerDTO.getEmail());
+		customer.setChanged(new Date());
 		return customer;
 	}
 	
