@@ -30,15 +30,18 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	public ResponseEntity<List<Employee>> findAll() {
 		List<Employee> listEmployees = repository.findAllByActiveTrue();
 		
-		LoggerConfig.LOGGER_EMPLOYEE.info("Listagem de clientes realizada com sucesso!!!");
+		LoggerConfig.LOGGER_EMPLOYEE.info("Listagem de funcionários realizada com sucesso!!!");
 		
 		return new ResponseEntity<List<Employee>>(listEmployees, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<Employee> findById(UUID id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Employee> findByCpf(String employeeCpf) {
+		employee = repository.findByCpf(employeeCpf);
+
+		LoggerConfig.LOGGER_EMPLOYEE.info("Funcionário " + employee.getName() + " realizada com sucesso!!!");
+		
+		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 	}
 
 	@Override
