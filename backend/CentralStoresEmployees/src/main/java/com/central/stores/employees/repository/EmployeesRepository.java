@@ -9,4 +9,6 @@ import com.central.stores.employees.model.Employee;
 
 public interface EmployeesRepository extends JpaRepository<Employee, UUID> {
 	List<Employee> findAllByActiveTrue();
+	
+	Employee findByCpf(String cpf);
 }
