@@ -15,7 +15,7 @@ public interface EmployeesServices {
 
 	public ResponseEntity<List<Employee>> findAll();
 	
-	public ResponseEntity<Employee> findById(UUID employeeId);
+	public ResponseEntity<Employee> findByCpf(String employeeCpf);
 	
 	public ResponseEntity<ResponseEmployeeDTO> create(RequestEmployeeDTO requestEmployeeDTO);
 	
