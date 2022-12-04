@@ -73,9 +73,13 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	}
 
 	@Override
-	public ResponseEntity<ResponseEmployeeDTO> delete(UUID id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ResponseEmployeeDTO> delete(UUID employeeId) {
+		employee = repository.findById(employeeId).get();
+		employee.setActive(Boolean.FALSE);
+		
+		repository.save(employee);
+		
+		return new ResponseEntity<ResponseEmployeeDTO>(HttpStatus.NO_CONTENT);
 	}
 	
 	private Employee updateModel(Employee employee, RequestEmployeeDTO requestEmployeeDTO) {
