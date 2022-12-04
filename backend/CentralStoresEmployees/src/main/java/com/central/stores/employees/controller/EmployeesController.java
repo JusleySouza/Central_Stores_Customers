@@ -46,4 +46,9 @@ public class EmployeesController {
 	public ResponseEntity<List<Employee>> listEmployees(){
 		return services.findAll();
 	}
+	
+	@GetMapping("/{employeeCPF}")
+	public ResponseEntity<Employee> findByCPF(@PathVariable("employeeCPF") String employeeCpf){
+		return services.findByCpf(employeeCpf);
+	}
 }
