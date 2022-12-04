@@ -31,10 +31,10 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private UUID id;
+	@Column(nullable = false, unique = true)
+	private String cpf;
 	@Column(nullable = false)
 	private String name;
-	@Column(nullable = false)
-	private String cpf;
 	@Column(nullable = false)
 	private String rg;
 	@Column(nullable = false)
