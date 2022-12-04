@@ -15,7 +15,7 @@ public interface CustomersServices {
 
 	public ResponseEntity<List<Customer>> findAll();
 
-	public ResponseEntity<Customer> findById(UUID id);
+	public ResponseEntity<Customer> findByCpf(String cpf);
 
 	public ResponseEntity<ResponseCustomerDTO> create(RequestCustomerDTO requestCustomerDTO);
 
