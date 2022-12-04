@@ -78,8 +78,12 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	@Override
 	public ResponseEntity<ResponseEmployeeDTO> delete(UUID employeeId) {
 		employee = repository.findById(employeeId).get();
+		
+		employee.setChanged(new Date());
 		employee.setActive(Boolean.FALSE);
+		employee.getAddress().setChanged(new Date());
 		employee.getAddress().setEmployeeIsActive(Boolean.FALSE);
+		
 		repository.save(employee);
 		
 		LoggerConfig.LOGGER_EMPLOYEE.info("Funcionário " + employee.getName() + " deletado com sucesso!!!");
