@@ -1,7 +1,6 @@
 package com.central.stores.employees.services.implement;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +29,6 @@ public class AddressServicesImplent implements AddressServices {
 	
 	Employee employee;
 	
-	@Override
-	public ResponseEntity<List<AddressDTO>> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<AddressDTO> findById(UUID id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID employeeId) {
 		employee = new Employee();
@@ -72,12 +59,6 @@ public class AddressServicesImplent implements AddressServices {
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
 
-	@Override
-	public ResponseEntity<AddressDTO> delete(UUID id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	private Address updateModel(Address address, AddressDTO requestAddressDTO) {
 		
 		address.setStreet(requestAddressDTO.getStreet());
@@ -88,5 +69,6 @@ public class AddressServicesImplent implements AddressServices {
 		
 		return address;
 	}
+
 
 }
