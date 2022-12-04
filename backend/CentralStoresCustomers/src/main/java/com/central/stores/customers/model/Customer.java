@@ -48,6 +48,8 @@ public class Customer {
 	private Date created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
+	@Column(nullable = false )
+	private Boolean active;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressId")
@@ -61,6 +63,7 @@ public class Customer {
 		this.phone = requestCustomerDTO.getPhone();
 		this.email = requestCustomerDTO.getEmail();
 		this.created = new Date();
+		this.active = Boolean.TRUE;
 		
 	}
 	
