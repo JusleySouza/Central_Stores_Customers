@@ -28,8 +28,11 @@ public class EmployeesServicesImplement implements EmployeesServices {
 
 	@Override
 	public ResponseEntity<List<Employee>> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> listEmployees = repository.findAllByActiveTrue();
+		
+		LoggerConfig.LOGGER_EMPLOYEE.info("Listagem de clientes realizada com sucesso!!!");
+		
+		return new ResponseEntity<List<Employee>>(listEmployees, HttpStatus.OK);
 	}
 
 	@Override
@@ -78,6 +81,8 @@ public class EmployeesServicesImplement implements EmployeesServices {
 		employee.setActive(Boolean.FALSE);
 		employee.getAddress().setEmployeeIsActive(Boolean.FALSE);
 		repository.save(employee);
+		
+		LoggerConfig.LOGGER_EMPLOYEE.info("Funcionário " + employee.getName() + " deletado com sucesso!!!");
 		
 		return new ResponseEntity<ResponseEmployeeDTO>(HttpStatus.NO_CONTENT);
 	}
