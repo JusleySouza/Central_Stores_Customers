@@ -27,8 +27,11 @@ public class CustomersServicesImplement implements CustomersServices {
 
 	@Override
 	public ResponseEntity<List<Customer>> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Customer> listCustomer = repository.findAllByActiveTrue();
+		
+		LoggerConfig.LOGGER_CUSTOMER.info(" Lista de Clientes executada com sucesso!! ");
+		
+		return new ResponseEntity<List<Customer>>(listCustomer, HttpStatus.OK);
 	}
 
 	@Override
@@ -69,6 +72,9 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer.setActive(Boolean.FALSE);
 		customer.getAddress().setCustomerIsActive(Boolean.FALSE);
 		repository.save(customer);
+		
+		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " deletado com sucesso!!");
+		
 		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
 	}
 
