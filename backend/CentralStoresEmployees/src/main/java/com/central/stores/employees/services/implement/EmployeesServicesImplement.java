@@ -23,15 +23,15 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	EmployeesRepository repository;
 
 	ResponseEmployeeDTO responseEmployeeDTO;
-	
+
 	Employee employee;
 
 	@Override
 	public ResponseEntity<List<Employee>> findAll() {
 		List<Employee> listEmployees = repository.findAllByActiveTrue();
-		
+
 		LoggerConfig.LOGGER_EMPLOYEE.info("Listagem de funcionários realizada com sucesso!!!");
-		
+
 		return new ResponseEntity<List<Employee>>(listEmployees, HttpStatus.OK);
 	}
 
@@ -40,23 +40,32 @@ public class EmployeesServicesImplement implements EmployeesServices {
 		employee = repository.findByCpf(employeeCpf);
 
 		LoggerConfig.LOGGER_EMPLOYEE.info("Funcionário " + employee.getName() + " realizada com sucesso!!!");
-		
+
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<List<Employee>> findByNeighborhood(String neighborhood) {
+		List<Employee> listEmployees = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood);
+
+		LoggerConfig.LOGGER_EMPLOYEE.info("Listagem de funcionários por bairro realizada com sucesso!!!");
+
+		return new ResponseEntity<List<Employee>>(listEmployees, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<ResponseEmployeeDTO> create(RequestEmployeeDTO requestEmployeeDTO) {
 		employee = new Employee();
 		responseEmployeeDTO = new ResponseEmployeeDTO();
-		
+
 		employee.transformRequestEmployeeDTOToModel(requestEmployeeDTO);
 
 		repository.save(employee);
-		
+
 		responseEmployeeDTO.transformModelToResponseEmployeeDTO(employee);
-		
+
 		LoggerConfig.LOGGER_EMPLOYEE.info("Funcionário " + employee.getName() + " salvo com sucesso!!!");
-		
+
 		return new ResponseEntity<ResponseEmployeeDTO>(responseEmployeeDTO, HttpStatus.CREATED);
 
 	}
@@ -64,36 +73,32 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	@Override
 	public ResponseEntity<ResponseEmployeeDTO> update(RequestEmployeeDTO requestEmployeeDTO, UUID employeeId) {
 		responseEmployeeDTO = new ResponseEmployeeDTO();
-		
+
 		employee = repository.findById(employeeId).get();
 		employee = updateModel(employee, requestEmployeeDTO);
-		
+
 		repository.save(employee);
-		
+
 		responseEmployeeDTO.transformModelToResponseEmployeeDTO(employee);
-		
-		
+
 		LoggerConfig.LOGGER_EMPLOYEE.info("Dados do funcionário " + employee.getName() + " atualizados com sucesso!!!");
-		
+
 		return new ResponseEntity<ResponseEmployeeDTO>(responseEmployeeDTO, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<ResponseEmployeeDTO> delete(UUID employeeId) {
 		employee = repository.findById(employeeId).get();
-		
 		employee.setChanged(new Date());
 		employee.setActive(Boolean.FALSE);
-		employee.getAddress().setChanged(new Date());
-		employee.getAddress().setEmployeeIsActive(Boolean.FALSE);
-		
+
 		repository.save(employee);
-		
+
 		LoggerConfig.LOGGER_EMPLOYEE.info("Funcionário " + employee.getName() + " deletado com sucesso!!!");
-		
+
 		return new ResponseEntity<ResponseEmployeeDTO>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	private Employee updateModel(Employee employee, RequestEmployeeDTO requestEmployeeDTO) {
 		employee.setChanged(new Date());
 		employee.setRg(requestEmployeeDTO.getRg());
@@ -103,8 +108,8 @@ public class EmployeesServicesImplement implements EmployeesServices {
 		employee.setPhone(requestEmployeeDTO.getPhone());
 		employee.setEmail(requestEmployeeDTO.getEmail());
 		employee.setGender(requestEmployeeDTO.getGender());
-		
+
 		return employee;
-		
+
 	}
 }
