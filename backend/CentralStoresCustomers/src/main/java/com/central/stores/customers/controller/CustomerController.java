@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.central.stores.customers.model.Customer;
@@ -44,7 +45,7 @@ public class CustomerController {
 		return services.delete(customerId);
 	}
 	
-	@GetMapping
+	@GetMapping("list")
 	public ResponseEntity<List<Customer>> listCustomers(){
 		return services.findAll();
 	}
@@ -52,5 +53,10 @@ public class CustomerController {
 	@GetMapping("/{customerCpf}")
 	public ResponseEntity<Customer> findByCpf(@PathVariable("customerCpf") String customerCpf){
 		return services.findByCpf(customerCpf);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Customer>> findByNeighborhood(@RequestParam("neighborhood") String neighborhood){
+		return services.findByNeighborhood(neighborhood);
 	}
 }
