@@ -35,9 +35,12 @@ public class CustomersServicesImplement implements CustomersServices {
 	}
 
 	@Override
-	public ResponseEntity<Customer> findById(UUID id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Customer> findByCpf(String cpf) {
+		customer = repository.findByCpf(cpf);
+		
+		LoggerConfig.LOGGER_CUSTOMER.info("Cliente encontrado com sucesso!! ");
+		
+		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 
 	@Override
