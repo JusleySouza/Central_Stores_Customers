@@ -52,19 +52,23 @@ public class CustomersServicesImplement implements CustomersServices {
 
 	@Override
 	public ResponseEntity<ResponseCustomerDTO> update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
+		responseCustomerDTO = new ResponseCustomerDTO();
 		customer = repository.findById(customerId).get();
 		customer = updateModel(customer, requestCustomerDTO);
 		repository.save(customer);
+		responseCustomerDTO.transformModelToResponseCustomerDTO(customer);
 		
 		LoggerConfig.LOGGER_CUSTOMER.info("Dados do cliente " + customer.getName() + " salvo com sucesso!!");
 		
-		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<ResponseCustomerDTO>(responseCustomerDTO, HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<ResponseCustomerDTO> delete(UUID id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ResponseCustomerDTO> delete(UUID customerId) {
+		customer = repository.findById(customerId).get();
+		customer.setActive(Boolean.FALSE);
+		repository.save(customer);
+		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
 	}
 
 	
