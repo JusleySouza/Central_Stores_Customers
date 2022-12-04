@@ -67,6 +67,7 @@ public class CustomersServicesImplement implements CustomersServices {
 	public ResponseEntity<ResponseCustomerDTO> delete(UUID customerId) {
 		customer = repository.findById(customerId).get();
 		customer.setActive(Boolean.FALSE);
+		customer.getAddress().setCustomerIsActive(Boolean.FALSE);
 		repository.save(customer);
 		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
 	}
