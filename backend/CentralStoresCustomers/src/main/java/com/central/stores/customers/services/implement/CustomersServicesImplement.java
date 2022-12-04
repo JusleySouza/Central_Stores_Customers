@@ -70,7 +70,9 @@ public class CustomersServicesImplement implements CustomersServices {
 	public ResponseEntity<ResponseCustomerDTO> delete(UUID customerId) {
 		customer = repository.findById(customerId).get();
 		customer.setActive(Boolean.FALSE);
+		customer.setChanged(new Date());
 		customer.getAddress().setCustomerIsActive(Boolean.FALSE);
+		customer.getAddress().setChanged(new Date());
 		repository.save(customer);
 		
 		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " deletado com sucesso!!");
