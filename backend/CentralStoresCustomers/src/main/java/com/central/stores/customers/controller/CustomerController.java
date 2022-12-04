@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,5 +34,10 @@ public class CustomerController {
 	public ResponseEntity<ResponseCustomerDTO> update(@RequestBody RequestCustomerDTO requestCustomerDTO,
 			@PathVariable("customerId") UUID customerId) {
 		return services.update(requestCustomerDTO, customerId);
+	}
+	
+	@DeleteMapping("/{customerId}")
+	public ResponseEntity<ResponseCustomerDTO> delete(@PathVariable("customerId") UUID customerId){
+		return services.delete(customerId);
 	}
 }
