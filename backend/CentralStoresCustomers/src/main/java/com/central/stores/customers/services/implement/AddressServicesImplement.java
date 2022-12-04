@@ -30,16 +30,6 @@ public class AddressServicesImplement implements AddressServices {
 	Customer customer;
 
 	@Override
-	public ResponseEntity<List<AddressDTO>> findAll() {
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<AddressDTO> findById(UUID id) {
-		return null;
-	}
-
-	@Override
 	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID customerId) {
 		address = new Address();
 		customer = new Customer();
@@ -59,11 +49,6 @@ public class AddressServicesImplement implements AddressServices {
 		addressRepository.save(address);
 		LoggerConfig.LOGGER_ADDRESS.info("Endereço atualizado com sucesso!!");
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
-	}
-
-	@Override
-	public ResponseEntity<AddressDTO> delete(UUID id) {
-		return null;
 	}
 	
 	private Address updateModel(Address address, AddressDTO requestAddressDTO) {
