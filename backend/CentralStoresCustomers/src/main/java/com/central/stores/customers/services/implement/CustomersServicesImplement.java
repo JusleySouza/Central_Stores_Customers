@@ -74,8 +74,6 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer = repository.findById(customerId).get();
 		customer.setActive(Boolean.FALSE);
 		customer.setChanged(new Date());
-		customer.getAddress().setCustomerIsActive(Boolean.FALSE);
-		customer.getAddress().setChanged(new Date());
 		repository.save(customer);
 		
 		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " deletado com sucesso!!");
@@ -83,6 +81,14 @@ public class CustomersServicesImplement implements CustomersServices {
 		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
 	}
 
+	@Override
+	public ResponseEntity<List<Customer>> findByNeighborhood(String neighborhood) {
+		List<Customer> listCustomers = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood);
+		
+		LoggerConfig.LOGGER_CUSTOMER.info(" Lista de Clientes por bairro executada com sucesso!! ");
+		
+		return new ResponseEntity<List<Customer>>(listCustomers, HttpStatus.OK);
+	}
 	
 	private Customer updateModel(Customer customer, RequestCustomerDTO requestCustomerDTO) {
 		customer.setName(requestCustomerDTO.getName());
@@ -94,5 +100,6 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer.setChanged(new Date());
 		return customer;
 	}
+
 	
 }
