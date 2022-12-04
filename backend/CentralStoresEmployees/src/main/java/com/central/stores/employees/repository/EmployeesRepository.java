@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.central.stores.employees.model.Employee;
 
 public interface EmployeesRepository extends JpaRepository<Employee, UUID> {
+	Employee findByCpf(String cpf);
+	
 	List<Employee> findAllByActiveTrue();
 	
-	Employee findByCpf(String cpf);
+	List<Employee> findAllByActiveTrueAndAddressNeighborhood(String neighborhood);
 }
