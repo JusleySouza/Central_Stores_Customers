@@ -41,6 +41,8 @@ public class Address {
 	private Date created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
+	@Column(nullable = false )
+	private Boolean customerIsActive;
 	
 	public void transformRequestAddressDTOToModel(AddressDTO requestAddressDTO) {
 		this.street = requestAddressDTO.getStreet();
@@ -48,5 +50,6 @@ public class Address {
 		this.neighborhood = requestAddressDTO.getNeighborhood();
 		this.city = requestAddressDTO.getCity();
 		this.created = new Date();
+		this.customerIsActive = Boolean.TRUE;
 	}
 }
