@@ -1,10 +1,12 @@
 package com.central.stores.customers.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.services.CustomersServices;
@@ -39,5 +42,10 @@ public class CustomerController {
 	@DeleteMapping("/{customerId}")
 	public ResponseEntity<ResponseCustomerDTO> delete(@PathVariable("customerId") UUID customerId){
 		return services.delete(customerId);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Customer>> listCustomers(){
+		return services.findAll();
 	}
 }
