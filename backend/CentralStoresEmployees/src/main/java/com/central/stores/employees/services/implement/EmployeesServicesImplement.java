@@ -76,7 +76,7 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	public ResponseEntity<ResponseEmployeeDTO> delete(UUID employeeId) {
 		employee = repository.findById(employeeId).get();
 		employee.setActive(Boolean.FALSE);
-		
+		employee.getAddress().setEmployeeIsActive(Boolean.FALSE);
 		repository.save(employee);
 		
 		return new ResponseEntity<ResponseEmployeeDTO>(HttpStatus.NO_CONTENT);

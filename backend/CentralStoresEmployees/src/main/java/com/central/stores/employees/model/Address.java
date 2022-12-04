@@ -36,16 +36,19 @@ public class Address {
 	private String neighborhood;
 	@Column(nullable = false)
 	private String city;
+	@Column(nullable = false)
+	private Boolean employeeIsActive;
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
 	private Date changed;
 	
 	public void transformRequestAddressDTOToModel(AddressDTO requestAddressDTO) {
+		this.created = new Date();
+		this.employeeIsActive = Boolean.TRUE;
+		this.city = requestAddressDTO.getCity();
 		this.street = requestAddressDTO.getStreet();
 		this.number = requestAddressDTO.getNumber();
 		this.neighborhood = requestAddressDTO.getNeighborhood();
-		this.city = requestAddressDTO.getCity();
-		this.created = new Date();
 	}
 }
