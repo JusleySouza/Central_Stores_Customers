@@ -16,6 +16,8 @@ public interface EmployeesServices {
 	public ResponseEntity<List<Employee>> findAll();
 	
 	public ResponseEntity<Employee> findByCpf(String employeeCpf);
+
+	public ResponseEntity<List<Employee>> findByNeighborhood(String neighborhood);
 	
 	public ResponseEntity<ResponseEmployeeDTO> create(RequestEmployeeDTO requestEmployeeDTO);
 	
