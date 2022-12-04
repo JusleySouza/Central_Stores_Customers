@@ -48,4 +48,9 @@ public class CustomerController {
 	public ResponseEntity<List<Customer>> listCustomers(){
 		return services.findAll();
 	}
+	
+	@GetMapping("/{customerCpf}")
+	public ResponseEntity<Customer> findByCpf(@PathVariable("customerCpf") String customerCpf){
+		return services.findByCpf(customerCpf);
+	}
 }
