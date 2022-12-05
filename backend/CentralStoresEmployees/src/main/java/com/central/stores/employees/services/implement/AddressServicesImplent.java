@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.central.stores.employees.config.LoggerConfig;
 import com.central.stores.employees.mapper.AddressMapper;
+import com.central.stores.employees.mapper.UpdateModel;
 import com.central.stores.employees.model.Address;
 import com.central.stores.employees.model.Employee;
 import com.central.stores.employees.model.dto.AddressDTO;
@@ -49,7 +50,7 @@ public class AddressServicesImplent implements AddressServices {
 	@Override
 	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId) {
 		address = addressRepository.findById(addressId).get();
-		address =  mapper.updateModel(requestAddressDTO);
+		address =  UpdateModel.address(address, requestAddressDTO);
 		
 		addressRepository.save(address);
 		

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.central.stores.employees.config.LoggerConfig;
 import com.central.stores.employees.crypto.Cryptography;
 import com.central.stores.employees.mapper.EmployeeMapper;
+import com.central.stores.employees.mapper.UpdateModel;
 import com.central.stores.employees.model.Employee;
 import com.central.stores.employees.model.dto.RequestEmployeeDTO;
 import com.central.stores.employees.model.dto.ResponseEmployeeDTO;
@@ -80,7 +81,7 @@ public class EmployeesServicesImplement implements EmployeesServices {
 	@Override
 	public ResponseEntity<ResponseEmployeeDTO> update(RequestEmployeeDTO requestEmployeeDTO, UUID employeeId) {
 		employee = repository.findById(employeeId).get();
-		employee = mapper.updateModel(requestEmployeeDTO);
+		employee = UpdateModel.employee(employee, requestEmployeeDTO);
 		employee = Cryptography.encode(employee);
 		
 		repository.save(employee);
