@@ -1,6 +1,5 @@
 package com.central.stores.employees.services.implement;
 
-import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.central.stores.employees.config.LoggerConfig;
+import com.central.stores.employees.mapper.AddressMapper;
 import com.central.stores.employees.model.Address;
 import com.central.stores.employees.model.Employee;
 import com.central.stores.employees.model.dto.AddressDTO;
@@ -18,23 +18,22 @@ import com.central.stores.employees.services.AddressServices;
 
 @Component
 public class AddressServicesImplent implements AddressServices {
+	@Autowired
+	private AddressMapper mapper;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 
 	@Autowired
-	EmployeesRepository employeesRepository;
+	private EmployeesRepository employeesRepository;
 
-	@Autowired
-	AddressRepository addressRepository;
+	private Address address;
 	
-	Address address;
-	
-	Employee employee;
+	private Employee employee;
 	
 	@Override
 	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID employeeId) {
-		employee = new Employee();
-		address = new Address();
-
-		address.transformRequestAddressDTOToModel(requestAddressDTO);
+		address = mapper.toModel(requestAddressDTO);
 		addressRepository.save(address);
 		
 		employee = employeesRepository.findById(employeeId).get();
@@ -50,7 +49,7 @@ public class AddressServicesImplent implements AddressServices {
 	@Override
 	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId) {
 		address = addressRepository.findById(addressId).get();
-		address = updateModel(address, requestAddressDTO);
+		address =  mapper.updateModel(requestAddressDTO);
 		
 		addressRepository.save(address);
 		
@@ -58,17 +57,5 @@ public class AddressServicesImplent implements AddressServices {
 		
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
-
-	private Address updateModel(Address address, AddressDTO requestAddressDTO) {
-		
-		address.setStreet(requestAddressDTO.getStreet());
-		address.setNumber(requestAddressDTO.getNumber());
-		address.setNeighborhood(requestAddressDTO.getNeighborhood());
-		address.setCity(requestAddressDTO.getCity());
-		address.setChanged(new Date());
-		
-		return address;
-	}
-
 
 }
