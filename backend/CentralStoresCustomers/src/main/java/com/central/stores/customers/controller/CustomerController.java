@@ -25,7 +25,7 @@ import com.central.stores.customers.services.CustomersServices;
 public class CustomerController {
 
 	@Autowired
-	CustomersServices services;
+	private CustomersServices services;
 	
 	
 
