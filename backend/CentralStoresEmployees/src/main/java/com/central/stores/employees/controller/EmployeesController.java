@@ -23,9 +23,8 @@ import com.central.stores.employees.services.EmployeesServices;
 @RestController
 @RequestMapping("/employees")
 public class EmployeesController {
-
 	@Autowired
-	EmployeesServices services;
+	private EmployeesServices services;
 
 	@PostMapping
 	public ResponseEntity<ResponseEmployeeDTO> create(@RequestBody RequestEmployeeDTO requestEmployeeDTO) {

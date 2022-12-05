@@ -9,8 +9,6 @@ import com.central.stores.employees.model.Employee;
 
 public interface EmployeesRepository extends JpaRepository<Employee, UUID> {
 	Employee findByCpf(String cpf);
-	
 	List<Employee> findAllByActiveTrue();
-	
 	List<Employee> findAllByActiveTrueAndAddressNeighborhood(String neighborhood);
 }

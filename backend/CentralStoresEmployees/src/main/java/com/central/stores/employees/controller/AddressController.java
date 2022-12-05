@@ -19,7 +19,7 @@ import com.central.stores.employees.services.AddressServices;
 @RequestMapping("/employees/{employeeId}/address")
 public class AddressController {
 	@Autowired
-	AddressServices services;
+	private AddressServices services;
 
 	@PostMapping
 	public ResponseEntity<Address> create(@RequestBody AddressDTO requestAddressDTO,

@@ -8,7 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RequestEmployeeDTO {
-
 	private String name;
 	private String cpf;
 	private String rg;
