@@ -16,12 +16,5 @@ public interface AddressMapper {
 		@Mapping(target= "changed", ignore= true),
 	})
 	Address toModel(AddressDTO addressDTO);
-	
-	@Mappings({
-		@Mapping(target= "changed", expression = "java(java.time.LocalDate.now())"),
-		@Mapping(target= "id", ignore= true),
-		@Mapping(target= "created", ignore= true),
-	})
-	Address updateModel(AddressDTO addressDTO);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.central.stores.customers.config.LoggerConfig;
 import com.central.stores.customers.mapper.AddressMapper;
+import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Address;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.AddressDTO;
@@ -45,7 +46,7 @@ public class AddressServicesImplement implements AddressServices {
 	@Override
 	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId) {
 		address = addressRepository.findById(addressId).get();
-		address = mapper.updateModel(requestAddressDTO);
+		address = UpdateModel.address(address, requestAddressDTO);
 		addressRepository.save(address);
 		LoggerConfig.LOGGER_ADDRESS.info("Endereço atualizado com sucesso!!");
 		return new ResponseEntity<Address>(address, HttpStatus.OK);

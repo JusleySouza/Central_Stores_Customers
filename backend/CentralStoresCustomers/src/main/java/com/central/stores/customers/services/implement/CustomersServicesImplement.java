@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.central.stores.customers.config.LoggerConfig;
 import com.central.stores.customers.crypto.Cryptography;
 import com.central.stores.customers.mapper.CustomerMapper;
+import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
@@ -58,7 +59,7 @@ public class CustomersServicesImplement implements CustomersServices {
 	@Override
 	public ResponseEntity<ResponseCustomerDTO> update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
 		customer = repository.findById(customerId).get();
-		customer = mapper.updateModel(requestCustomerDTO);
+		customer = UpdateModel.customer(customer, requestCustomerDTO);
 		customer = Cryptography.encode(customer);
 		repository.save(customer);
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);

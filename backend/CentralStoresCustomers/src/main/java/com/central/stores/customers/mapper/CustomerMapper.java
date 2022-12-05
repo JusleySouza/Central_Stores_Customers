@@ -22,25 +22,7 @@ public interface CustomerMapper {
 	
 	@Mappings({
 		@Mapping(target= "changed", expression = "java(java.time.LocalDate.now())"),
-		@Mapping(target= "created", ignore = true),
-		@Mapping(target= "id", ignore= true),
-		@Mapping(target= "address", ignore= true),
-		@Mapping(target= "active", ignore = true),
-	})
-	Customer updateModel(RequestCustomerDTO requestCustomerDTO);
-	
-	@Mappings({
-		@Mapping(target= "changed", expression = "java(java.time.LocalDate.now())"),
 		@Mapping(target= "active", expression = "java(java.lang.Boolean.FALSE)"),
-		@Mapping(target= "created", ignore = true),
-		@Mapping(target= "id", ignore= true),
-		@Mapping(target= "address", ignore= true),
-		@Mapping(target= "name", ignore = true),
-		@Mapping(target= "cpf", ignore= true),
-		@Mapping(target= "rg", ignore= true),
-		@Mapping(target= "gender", ignore = true),
-		@Mapping(target= "phone", ignore= true),
-		@Mapping(target= "email", ignore= true),
 	})
 	Customer customerDelete(Customer customer);
 	
