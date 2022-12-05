@@ -1,7 +1,5 @@
 package com.central.stores.customers.model.dto;
 
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
