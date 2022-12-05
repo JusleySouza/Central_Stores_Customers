@@ -20,7 +20,7 @@ import com.central.stores.customers.services.AddressServices;
 public class AddressController {
 	
 	@Autowired
-	AddressServices services;
+	private AddressServices services;
 	
 	@PostMapping
 	public ResponseEntity<Address> create(@RequestBody AddressDTO requestAddressDTO, @PathVariable("customerId") UUID customerId) {
