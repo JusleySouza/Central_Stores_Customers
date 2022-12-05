@@ -10,8 +10,6 @@ import com.central.stores.employees.model.dto.AddressDTO;
 
 @Service
 public interface AddressServices {
-	
 	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID employeeId);
-	
 	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId);
 }
