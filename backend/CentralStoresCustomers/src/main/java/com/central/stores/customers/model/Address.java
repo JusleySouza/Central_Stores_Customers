@@ -1,5 +1,6 @@
 package com.central.stores.customers.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -38,15 +39,8 @@ public class Address {
 	private String city;
 	@Column(nullable = false )
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date created;
+	private LocalDate created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date changed;
+	private LocalDate changed;
 	
-	public void transformRequestAddressDTOToModel(AddressDTO requestAddressDTO) {
-		this.street = requestAddressDTO.getStreet();
-		this.number = requestAddressDTO.getNumber();
-		this.neighborhood = requestAddressDTO.getNeighborhood();
-		this.city = requestAddressDTO.getCity();
-		this.created = new Date();
-	}
 }
