@@ -1,6 +1,6 @@
 package com.central.stores.employees.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.central.stores.employees.constants.Conf;
-import com.central.stores.employees.model.dto.RequestEmployeeDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +25,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Employee {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
@@ -49,23 +47,11 @@ public class Employee {
 	private String email;
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date created;
+	private LocalDate created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date changed;
+	private LocalDate changed;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressId")
 	private Address address;
-
-	public void transformRequestEmployeeDTOToModel(RequestEmployeeDTO requestEmployeeDTO) {
-		this.created = new Date();
-		this.active = Boolean.TRUE;
-		this.rg = requestEmployeeDTO.getRg();
-		this.cpf = requestEmployeeDTO.getCpf();
-		this.name = requestEmployeeDTO.getName();
-		this.role = requestEmployeeDTO.getRole();
-		this.email = requestEmployeeDTO.getEmail();
-		this.phone = requestEmployeeDTO.getPhone();
-		this.gender = requestEmployeeDTO.getGender();
-	}
 }

@@ -1,6 +1,6 @@
 package com.central.stores.employees.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.central.stores.employees.constants.Conf;
-import com.central.stores.employees.model.dto.AddressDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +22,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Address {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
@@ -37,15 +35,7 @@ public class Address {
 	@Column(nullable = false)
 	private String city;
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date created;
+	private LocalDate created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date changed;
-	
-	public void transformRequestAddressDTOToModel(AddressDTO requestAddressDTO) {
-		this.created = new Date();
-		this.city = requestAddressDTO.getCity();
-		this.street = requestAddressDTO.getStreet();
-		this.number = requestAddressDTO.getNumber();
-		this.neighborhood = requestAddressDTO.getNeighborhood();
-	}
+	private LocalDate changed;
 }
