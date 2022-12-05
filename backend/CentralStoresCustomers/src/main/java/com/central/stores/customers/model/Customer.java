@@ -1,5 +1,6 @@
 package com.central.stores.customers.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -45,26 +46,14 @@ public class Customer {
 	private String email;
 	@Column(nullable = false )
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date created;
+	private LocalDate created;
 	@DateTimeFormat(pattern = Conf.dateFormat)
-	private Date changed;
+	private LocalDate changed;
 	@Column(nullable = false )
 	private Boolean active;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "addressId")
 	private Address address;
-	
-	public void transformRequestCustomerDTOToModel(RequestCustomerDTO requestCustomerDTO) {
-		this.name = requestCustomerDTO.getName();
-		this.cpf = requestCustomerDTO.getCpf();
-		this.rg = requestCustomerDTO.getRg();
-		this.gender = requestCustomerDTO.getGender();
-		this.phone = requestCustomerDTO.getPhone();
-		this.email = requestCustomerDTO.getEmail();
-		this.created = new Date();
-		this.active = Boolean.TRUE;
-		
-	}
 	
 }
