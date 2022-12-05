@@ -21,26 +21,6 @@ public interface EmployeeMapper {
 	Employee toModel(RequestEmployeeDTO requestEmployeeDTO);
 	
 	@Mappings({
-		@Mapping(target= "id", ignore= true),
-		@Mapping(target= "active", ignore= true),
-		@Mapping(target= "created", ignore= true),
-		@Mapping(target= "address", ignore= true),
-		@Mapping(target= "changed", expression = "java(java.time.LocalDate.now())"),
-		
-	})
-	Employee updateModel(RequestEmployeeDTO requestEmployeeDTO);
-	
-	@Mappings({
-		@Mapping(target= "id", ignore= true),
-		@Mapping(target= "rg", ignore= true),
-		@Mapping(target= "cpf", ignore= true),
-		@Mapping(target= "role", ignore= true),
-		@Mapping(target= "name", ignore= true),
-		@Mapping(target= "phone", ignore= true),
-		@Mapping(target= "email", ignore= true),
-		@Mapping(target= "gender", ignore= true),
-		@Mapping(target= "created", ignore= true),
-		@Mapping(target= "address", ignore= true),
 		@Mapping(target= "active", expression = "java(java.lang.Boolean.FALSE)"),
 		@Mapping(target= "changed", expression = "java(java.time.LocalDate.now())"),
 	})
