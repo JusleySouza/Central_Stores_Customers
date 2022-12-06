@@ -20,6 +20,9 @@ import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.services.CustomersServices;
 
+import lombok.Generated;
+
+@Generated
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
