@@ -102,8 +102,15 @@ class CustomerServicesImplementTest {
 	public void delete() {
 		customer = Cryptography.encode(customer);
 		when(repository.findById(any())).thenReturn(Optional.of(customer));
-		when(mapper.customerDelete(customer)).thenReturn(customer);
+		when(mapper.customerDelete(any())).thenReturn(customer);
 		ResponseEntity<ResponseCustomerDTO> customers = services.delete(UUID.randomUUID());
 		assertTrue(customers.getStatusCodeValue()== HttpStatus.NO_CONTENT.value());
+	}
+	
+	@Test
+	public void create() {
+		when(mapper.toModel(any())).thenReturn(customer);
+		ResponseEntity<ResponseCustomerDTO> customer = services.create(requestCustomerDTO);
+		assertNotNull(customer);
 	}
 }
