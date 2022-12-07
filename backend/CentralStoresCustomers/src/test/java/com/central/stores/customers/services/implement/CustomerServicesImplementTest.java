@@ -2,20 +2,27 @@ package com.central.stores.customers.services.implement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.central.stores.customers.crypto.Cryptography;
+import com.central.stores.customers.mapper.CustomerMapper;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
@@ -26,6 +33,9 @@ class CustomerServicesImplementTest {
 
 	@InjectMocks
 	private CustomersServicesImplement services;
+	
+	@Mock
+	private CustomerMapper mapper;
 	
 	@Mock
 	private CustomersRepository repository;
@@ -86,5 +96,14 @@ class CustomerServicesImplementTest {
 		ResponseEntity<List<Customer>> customers = services.findAll();
 		assertNotNull(customers);
 		
+	}
+	
+	@Test
+	public void delete() {
+		customer = Cryptography.encode(customer);
+		when(repository.findById(any())).thenReturn(Optional.of(customer));
+		when(mapper.customerDelete(customer)).thenReturn(customer);
+		ResponseEntity<ResponseCustomerDTO> customers = services.delete(UUID.randomUUID());
+		assertTrue(customers.getStatusCodeValue()== HttpStatus.NO_CONTENT.value());
 	}
 }
