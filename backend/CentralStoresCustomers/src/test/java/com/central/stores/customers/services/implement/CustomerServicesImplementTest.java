@@ -79,4 +79,12 @@ class CustomerServicesImplementTest {
 		assertNotNull(listCustomers);
 	}
 	
+	@Test
+	public void findAll() {
+		customer = Cryptography.encode(customer);
+		when(repository.findAll()).thenReturn(List.of(customer));
+		ResponseEntity<List<Customer>> customers = services.findAll();
+		assertNotNull(customers);
+		
+	}
 }
