@@ -1,10 +1,12 @@
 package com.central.stores.customers.services.implement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,6 @@ import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.repository.CustomersRepository;
-import com.central.stores.customers.services.implement.CustomersServicesImplement;
 
 
 class CustomerServicesImplementTest {
@@ -70,4 +71,12 @@ class CustomerServicesImplementTest {
 		assertEquals(cust, customer);
 	}
 
+	@Test
+	public void findByNeighborhood() {
+		customer = Cryptography.encode(customer);
+		when(repository.findAllByActiveTrueAndAddressNeighborhood(anyString())).thenReturn(List.of(customer));
+		ResponseEntity<List<Customer>> listCustomers = services.findByNeighborhood("teste");
+		assertNotNull(listCustomers);
+	}
+	
 }
