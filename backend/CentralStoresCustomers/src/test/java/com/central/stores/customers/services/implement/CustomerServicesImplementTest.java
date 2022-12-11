@@ -27,6 +27,7 @@ import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.repository.CustomersRepository;
+import com.central.stores.customers.test.utils.ClassBuilder;
 
 
 class CustomerServicesImplementTest {
@@ -48,30 +49,9 @@ class CustomerServicesImplementTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		customer = new Customer();
-		requestCustomerDTO = new RequestCustomerDTO();
-		responseCustomerDTO = new ResponseCustomerDTO();
-		
-		customer.setActive(true);
-		customer.setChanged(LocalDate.now());
-		customer.setCpf("12365478965");
-		customer.setCreated(LocalDate.now());
-		customer.setEmail("caio@castro.com");
-		customer.setGender("masculino");
-		customer.setName("Caio Castro");
-		customer.setPhone("1111111111");
-		customer.setRg("325698741");
-		
-		requestCustomerDTO.setCpf("12365478965");
-		requestCustomerDTO.setEmail("caio@castro.com");
-		requestCustomerDTO.setGender("masculino");
-		requestCustomerDTO.setName("Caio Castro");
-		requestCustomerDTO.setPhone("1111111111");
-		requestCustomerDTO.setRg("325698741");
-		
-		responseCustomerDTO.setName("Caio Castro");
-		responseCustomerDTO.setId(UUID.randomUUID());
-		
+		customer = ClassBuilder.customerBuider();
+		requestCustomerDTO = ClassBuilder.requestCustomerDTOBuider();
+		responseCustomerDTO = ClassBuilder.responseCustomerDTOBuider();
 	}
 	
 	@Test
