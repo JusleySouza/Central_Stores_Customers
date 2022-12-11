@@ -26,6 +26,8 @@ class CustomersControllerTest {
 	private final String CONTEXT_PATH = "/customers";
 	private final String PATH_FIND_ALL = "/list";
 	private final String CUSTOMER_CPF = "12345678987";
+	private final String QUERY_PARAM_KEY = "neighborhood";
+	private final String QUERY_PARAM_VALUE = "testes";
 
 	@Test
 	void listCustomers() throws Exception{
@@ -41,7 +43,7 @@ class CustomersControllerTest {
 	
 	@Test
 	void findByNeighborhood() throws Exception {
-		mockMvc.perform(get(CONTEXT_PATH).param("neighborhood", "testes"))
+		mockMvc.perform(get(CONTEXT_PATH).param(QUERY_PARAM_KEY, QUERY_PARAM_VALUE))
 		.andExpect(status().isOk());
 	}
 
