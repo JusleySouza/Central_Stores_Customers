@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.central.stores.customers.controller.CustomerController;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.services.implement.CustomersServicesImplement;
+import com.central.stores.customers.test.utils.ClassBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -43,18 +44,7 @@ class CustomersControllerTest {
 	@BeforeEach
 	void setUp() {
 		objectMapper = new ObjectMapper();
-		customer = new Customer();
-		
-		customer.setActive(true);
-		customer.setChanged(LocalDate.now());
-		customer.setCpf("12365478965");
-		customer.setCreated(LocalDate.now());
-		customer.setEmail("caio@castro.com");
-		customer.setGender("masculino");
-		customer.setName("Caio Castro");
-		customer.setPhone("1111111111");
-		customer.setRg("325698741");
-		
+		customer = ClassBuilder.customerBuider();
 		objectMapper.registerModule(new JavaTimeModule());
 	}
 
@@ -93,7 +83,6 @@ class CustomersControllerTest {
 	@Test
 	void delete() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete(CONTEXT_PATH + CUSTOMER_ID)).andExpect(status().isOk());
-
 	}
 	
 }
