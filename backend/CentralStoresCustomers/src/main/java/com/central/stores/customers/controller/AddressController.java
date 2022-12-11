@@ -15,6 +15,8 @@ import com.central.stores.customers.model.Address;
 import com.central.stores.customers.model.dto.AddressDTO;
 import com.central.stores.customers.services.AddressServices;
 
+import lombok.Generated;
+
 @RestController
 @RequestMapping("/customers/{customerId}/address")
 public class AddressController {

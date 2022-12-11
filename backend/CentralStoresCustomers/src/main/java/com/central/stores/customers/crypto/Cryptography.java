@@ -1,9 +1,11 @@
 package com.central.stores.customers.crypto;
 
 import java.util.Base64;
-
 import com.central.stores.customers.model.Customer;
 
+import lombok.Generated;
+
+@Generated
 public final class Cryptography {
 
 	public static Customer encode(Customer customer) {
