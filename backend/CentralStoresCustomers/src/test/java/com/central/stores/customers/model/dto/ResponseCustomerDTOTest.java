@@ -27,4 +27,11 @@ class ResponseCustomerDTOTest {
 		assertEquals(expectedResponseCustomerDTO.toString(), responseCustomerDTO.toString());
 	}
 
+	@Test
+	void setter() {
+		ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
+		responseCustomerDTO.setName("Caio Castro");
+		responseCustomerDTO.setId(id);
+		assertEquals(expectedResponseCustomerDTO.toString(), responseCustomerDTO.toString());
+	}
 }
