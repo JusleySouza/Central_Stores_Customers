@@ -38,5 +38,11 @@ class CustomersControllerTest {
 		mockMvc.perform(get(CONTEXT_PATH + PATH_FIND_ALL + CUSTOMER_CPF))
 		.andExpect(status().isOk());
 	}
+	
+	@Test
+	void findByNeighborhood() throws Exception {
+		mockMvc.perform(get(CONTEXT_PATH).param("neighborhood", "testes"))
+		.andExpect(status().isOk());
+	}
 
 }
