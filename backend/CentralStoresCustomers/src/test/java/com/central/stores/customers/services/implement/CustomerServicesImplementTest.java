@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.central.stores.customers.crypto.Cryptography;
 import com.central.stores.customers.mapper.CustomerMapper;
+import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
@@ -115,13 +116,13 @@ class CustomerServicesImplementTest {
 		assertNotNull(customer);
 	}
 	
-//	@Test
-//	public void update() {
-//		when(repository.findById(any())).thenReturn(Optional.of(customer));
-//		when(UpdateModel.customer(customer, requestCustomerDTO)).thenReturn(customer);
-//		
-//		ResponseEntity<ResponseCustomerDTO> customer = services.update(requestCustomerDTO, UUID.randomUUID());
-//		assertNotNull(customer);
-//	}
+	@Test
+	public void update() {
+		when(repository.findById(any())).thenReturn(Optional.of(customer));
+		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
+		
+		ResponseEntity<ResponseCustomerDTO> customer = services.update(requestCustomerDTO, UUID.randomUUID());
+		assertNotNull(customer);
+	}
 	
 }
