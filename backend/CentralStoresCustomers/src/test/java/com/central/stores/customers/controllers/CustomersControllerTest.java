@@ -2,6 +2,7 @@ package com.central.stores.customers.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
@@ -36,6 +37,7 @@ class CustomersControllerTest {
 	private final String CUSTOMER_CPF = "12345678987";
 	private final String QUERY_PARAM_KEY = "neighborhood";
 	private final String QUERY_PARAM_VALUE = "testes";
+	private final String CUSTOMER_ID = "/a54beaf5-fdb1-4cd9-85ce-36fe8b8b88fd";
 	
 	@BeforeEach
 	void setUp() {
@@ -76,6 +78,13 @@ class CustomersControllerTest {
 	@Test
 	void create() throws Exception {
 		mockMvc.perform(post(CONTEXT_PATH).contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isOk());
+
+	}
+	
+	@Test
+	void update() throws Exception {
+		mockMvc.perform(put(CONTEXT_PATH + CUSTOMER_ID).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isOk());
 
 	}
