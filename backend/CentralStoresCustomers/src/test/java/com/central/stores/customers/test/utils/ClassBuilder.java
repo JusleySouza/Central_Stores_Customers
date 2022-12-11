@@ -16,5 +16,10 @@ public final class ClassBuilder {
 				.changed(LocalDate.now()).created(LocalDate.now()).build();
 	}
 
+	public static AddressDTO addressDTOBuider() {
+		return AddressDTO.builder().city("Bauru").neighborhood("Pedro Santos Drumond").number(56)
+				.street("Rua das Amelias").build();
+	}
+
 	
 }
