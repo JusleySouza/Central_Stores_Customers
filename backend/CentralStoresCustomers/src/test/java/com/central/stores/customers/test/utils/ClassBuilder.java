@@ -27,4 +27,8 @@ public final class ClassBuilder {
 				.build();
 	}
 	
+	public static RequestCustomerDTO requestCustomerDTOBuider() {
+		return RequestCustomerDTO.builder().cpf("12365478965").email("caio@castro.com").gender("masculino")
+				.name("Caio Castro").phone("1111111111").rg("325698741").build();
+	}
 }
