@@ -82,4 +82,11 @@ class AddressServicesImplementTest {
 		assertNotNull(address);
 	}
 
+	@Test
+	public void update() {
+		when(addressRepository.findById(any())).thenReturn(Optional.of(address));
+		ResponseEntity<Address> address = services.update(addressDTO, UUID.randomUUID());
+		assertNotNull(address);
+	}
+	
 }
