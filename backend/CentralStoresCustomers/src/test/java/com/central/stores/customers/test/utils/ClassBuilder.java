@@ -21,5 +21,10 @@ public final class ClassBuilder {
 				.street("Rua das Amelias").build();
 	}
 
+	public static Customer customerBuider() {
+		return Customer.builder().active(true).changed(LocalDate.now()).cpf("12365478965").created(LocalDate.now())
+				.email("caio@castro.com").gender("masculino").name("Caio Castro").phone("1111111111").rg("325698741")
+				.build();
+	}
 	
 }
