@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -70,6 +69,7 @@ class CustomerServicesImplementTest {
 		requestCustomerDTO.setRg("325698741");
 		
 		responseCustomerDTO.setName("Caio Castro");
+		responseCustomerDTO.setId(UUID.randomUUID());
 		
 	}
 	
@@ -92,7 +92,7 @@ class CustomerServicesImplementTest {
 	@Test
 	public void findAll() {
 		customer = Cryptography.encode(customer);
-		when(repository.findAll()).thenReturn(List.of(customer));
+		when(repository.findAllByActiveTrue()).thenReturn(List.of(customer));
 		ResponseEntity<List<Customer>> customers = services.findAll();
 		assertNotNull(customers);
 		
@@ -110,7 +110,18 @@ class CustomerServicesImplementTest {
 	@Test
 	public void create() {
 		when(mapper.toModel(any())).thenReturn(customer);
+		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		ResponseEntity<ResponseCustomerDTO> customer = services.create(requestCustomerDTO);
 		assertNotNull(customer);
 	}
+	
+//	@Test
+//	public void update() {
+//		when(repository.findById(any())).thenReturn(Optional.of(customer));
+//		when(UpdateModel.customer(customer, requestCustomerDTO)).thenReturn(customer);
+//		
+//		ResponseEntity<ResponseCustomerDTO> customer = services.update(requestCustomerDTO, UUID.randomUUID());
+//		assertNotNull(customer);
+//	}
+	
 }
