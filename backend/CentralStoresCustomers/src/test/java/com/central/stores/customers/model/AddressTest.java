@@ -32,7 +32,6 @@ class AddressTest {
 	@Test
 	void setter() {
 		Address address = new Address();
-		address.setId(id);
 		address.setCity("Bauru");
 		address.setNeighborhood("Pedro Santos Drumond");
 		address.setNumber(56);
