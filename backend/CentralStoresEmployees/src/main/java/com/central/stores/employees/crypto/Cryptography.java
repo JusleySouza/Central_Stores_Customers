@@ -4,6 +4,9 @@ import java.util.Base64;
 
 import com.central.stores.employees.model.Employee;
 
+import lombok.Generated;
+
+@Generated
 public final class Cryptography {
 	public static Employee encode(Employee employee) {
 		employee.setCpf(new String(Base64.getEncoder().encode(employee.getCpf().getBytes())));

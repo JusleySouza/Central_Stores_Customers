@@ -16,14 +16,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.central.stores.employees.constants.Conf;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
