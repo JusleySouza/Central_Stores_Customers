@@ -8,6 +8,9 @@ import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.AddressDTO;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 
+import lombok.Generated;
+
+@Generated
 public final class UpdateModel {
 
 	public static Customer customer(Customer customer, RequestCustomerDTO RequestCustomerDTO) {
