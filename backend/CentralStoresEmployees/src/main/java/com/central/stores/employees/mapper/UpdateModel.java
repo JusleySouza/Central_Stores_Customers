@@ -7,6 +7,9 @@ import com.central.stores.employees.model.Employee;
 import com.central.stores.employees.model.dto.AddressDTO;
 import com.central.stores.employees.model.dto.RequestEmployeeDTO;
 
+import lombok.Generated;
+
+@Generated
 public final class UpdateModel {
 
 	public static Employee employee(Employee employee, RequestEmployeeDTO requestEmployeeDTO) {
