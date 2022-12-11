@@ -1,6 +1,7 @@
 package com.central.stores.customers.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.central.stores.customers.controller.AddressController;
 import com.central.stores.customers.model.Address;
 import com.central.stores.customers.services.implement.AddressServicesImplement;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -36,6 +38,7 @@ class AddressControllerTest {
 	private final String CONTEXT_PATH = "/customers";
 	private final String CUSTOMER_ID = "/a54beaf5-fdb1-4cd9-85ce-36fe8b8b88fd";
 	private final String PATH = "/address";
+	private final String ADDRESS_ID = "/cf6239ee-e032-442a-a8b8-48f3cfb881e5";
 
 	@BeforeEach
 	void setUp() {
@@ -49,14 +52,22 @@ class AddressControllerTest {
 		address.setStreet("Rua das Amelias");
 		address.setChanged(LocalDate.now());
 		address.setCreated(LocalDate.now());
+		
+		objectMapper.registerModule(new JavaTimeModule());
 	}
 
 	@Test
 	void create() throws Exception {
-		objectMapper.registerModule(new JavaTimeModule());
 		mockMvc.perform(post(CONTEXT_PATH + CUSTOMER_ID + PATH).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(address))).andExpect(status().isOk());
 
 	}
+	
+	@Test
+	void update() throws JsonProcessingException, Exception {
+		mockMvc.perform(put(CONTEXT_PATH + CUSTOMER_ID + PATH + ADDRESS_ID).contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(address))).andExpect(status().isOk());
+	}
+	
 
 }
