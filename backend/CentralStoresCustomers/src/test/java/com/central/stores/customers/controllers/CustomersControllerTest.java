@@ -25,6 +25,7 @@ class CustomersControllerTest {
 	
 	private final String CONTEXT_PATH = "/customers";
 	private final String PATH_FIND_ALL = "/list";
+	private final String CUSTOMER_CPF = "12345678987";
 
 	@Test
 	void listCustomers() throws Exception{
@@ -32,6 +33,10 @@ class CustomersControllerTest {
 		.andExpect(status().isOk());
 	}
 	
-	
+	@Test
+	void findByCpf() throws Exception{
+		mockMvc.perform(get(CONTEXT_PATH + PATH_FIND_ALL + CUSTOMER_CPF))
+		.andExpect(status().isOk());
+	}
 
 }
