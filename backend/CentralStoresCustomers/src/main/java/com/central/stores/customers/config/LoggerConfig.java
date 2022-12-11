@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import com.central.stores.customers.services.implement.AddressServicesImplement;
 import com.central.stores.customers.services.implement.CustomersServicesImplement;
 
+import lombok.Generated;
+
+@Generated
 public class LoggerConfig {
 
 	public static final Logger LOGGER_CUSTOMER = LoggerFactory.getLogger(CustomersServicesImplement.class);

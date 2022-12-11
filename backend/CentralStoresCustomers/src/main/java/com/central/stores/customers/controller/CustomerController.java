@@ -22,7 +22,6 @@ import com.central.stores.customers.services.CustomersServices;
 
 import lombok.Generated;
 
-@Generated
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
