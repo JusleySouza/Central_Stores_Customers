@@ -13,7 +13,7 @@ public final class ClassBuilder {
 
 	public static Address addressBuilder() {
 		return Address.builder().city("Bauru").neighborhood("Pedro Santos Drumond").number(56).street("Rua das Amelias")
-				.changed(LocalDate.now()).created(LocalDate.now()).build();
+				.changed(LocalDate.now()).created(LocalDate.now()).id(UUID.randomUUID()).build();
 	}
 
 	public static AddressDTO addressDTOBuider() {
@@ -23,7 +23,7 @@ public final class ClassBuilder {
 
 	public static Customer customerBuider() {
 		return Customer.builder().active(true).changed(LocalDate.now()).cpf("12365478965").created(LocalDate.now())
-				.email("caio@castro.com").gender("masculino").name("Caio Castro").phone("1111111111").rg("325698741")
+				.email("caio@castro.com").gender("masculino").name("Caio Castro").phone("1111111111").rg("325698741").id(UUID.randomUUID())
 				.build();
 	}
 	
