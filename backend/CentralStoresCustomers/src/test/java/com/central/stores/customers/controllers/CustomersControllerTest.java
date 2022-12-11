@@ -1,18 +1,24 @@
 package com.central.stores.customers.controllers;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.AfterAll;
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.central.stores.customers.controller.CustomerController;
+import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.services.implement.CustomersServicesImplement;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @WebMvcTest(controllers = CustomerController.class)
 class CustomersControllerTest {
@@ -22,12 +28,32 @@ class CustomersControllerTest {
 	
 	@MockBean
 	private CustomersServicesImplement services;
+	private ObjectMapper objectMapper;
+	private Customer customer;
 	
 	private final String CONTEXT_PATH = "/customers";
 	private final String PATH_FIND_ALL = "/list";
 	private final String CUSTOMER_CPF = "12345678987";
 	private final String QUERY_PARAM_KEY = "neighborhood";
 	private final String QUERY_PARAM_VALUE = "testes";
+	
+	@BeforeEach
+	void setUp() {
+		objectMapper = new ObjectMapper();
+		customer = new Customer();
+		
+		customer.setActive(true);
+		customer.setChanged(LocalDate.now());
+		customer.setCpf("12365478965");
+		customer.setCreated(LocalDate.now());
+		customer.setEmail("caio@castro.com");
+		customer.setGender("masculino");
+		customer.setName("Caio Castro");
+		customer.setPhone("1111111111");
+		customer.setRg("325698741");
+		
+		objectMapper.registerModule(new JavaTimeModule());
+	}
 
 	@Test
 	void listCustomers() throws Exception{
@@ -47,4 +73,10 @@ class CustomersControllerTest {
 		.andExpect(status().isOk());
 	}
 
+	@Test
+	void create() throws Exception {
+		mockMvc.perform(post(CONTEXT_PATH).contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isOk());
+
+	}
 }
