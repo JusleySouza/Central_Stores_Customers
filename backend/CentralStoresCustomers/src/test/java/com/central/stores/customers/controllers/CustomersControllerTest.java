@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.central.stores.customers.controller.CustomerController;
 import com.central.stores.customers.model.Customer;
@@ -88,4 +89,11 @@ class CustomersControllerTest {
 				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isOk());
 
 	}
+	
+	@Test
+	void delete() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.delete(CONTEXT_PATH + CUSTOMER_ID)).andExpect(status().isOk());
+
+	}
+	
 }
