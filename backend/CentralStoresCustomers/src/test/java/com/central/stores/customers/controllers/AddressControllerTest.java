@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.central.stores.customers.controller.AddressController;
 import com.central.stores.customers.model.Address;
 import com.central.stores.customers.services.implement.AddressServicesImplement;
+import com.central.stores.customers.test.utils.ClassBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -42,16 +43,8 @@ class AddressControllerTest {
 
 	@BeforeEach
 	void setUp() {
-		address = new Address();
+		address = ClassBuilder.addressBuilder();
 		objectMapper = new ObjectMapper();
-
-		address.setId(UUID.randomUUID());
-		address.setCity("Bauru");
-		address.setNeighborhood("Pedro Santos Drumond");
-		address.setNumber(56);
-		address.setStreet("Rua das Amelias");
-		address.setChanged(LocalDate.now());
-		address.setCreated(LocalDate.now());
 		
 		objectMapper.registerModule(new JavaTimeModule());
 	}
