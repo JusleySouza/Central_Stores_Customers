@@ -1,7 +1,6 @@
 package com.central.stores.customers.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -16,9 +15,11 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.central.stores.customers.constants.Conf;
-import com.central.stores.customers.model.dto.RequestCustomerDTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -26,6 +27,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
 
 	@Id
