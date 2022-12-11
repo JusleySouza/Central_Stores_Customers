@@ -22,5 +22,15 @@ class AddressDTOTest {
 				.street("Rua das Amelias").build();
 		assertEquals(expectedAddressDTO.toString(), addressDTO.toString());
 	}
+	
+	@Test
+	void setter() {
+		AddressDTO addressDTO = new AddressDTO();
+		addressDTO.setCity("Bauru");
+		addressDTO.setNeighborhood("Pedro Santos Drumond");
+		addressDTO.setNumber(56);
+		addressDTO.setStreet("Rua das Amelias");
+		assertEquals(expectedAddressDTO.toString(), addressDTO.toString());
+	}
 
 }
