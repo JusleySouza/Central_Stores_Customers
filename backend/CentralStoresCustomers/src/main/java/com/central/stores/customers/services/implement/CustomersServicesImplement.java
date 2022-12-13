@@ -50,33 +50,33 @@ public class CustomersServicesImplement implements CustomersServices {
 	}
 
 	@Override
-	public ResponseEntity<ResponseCustomerDTO> create(RequestCustomerDTO requestCustomerDTO) {
+	public ResponseCustomerDTO create(RequestCustomerDTO requestCustomerDTO) {
 		customer = mapper.toModel(requestCustomerDTO);
 		customer = Cryptography.encode(customer);
 		repository.save(customer);
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " salvo com sucesso!!");
-		return new ResponseEntity<ResponseCustomerDTO>(responseCustomerDTO, HttpStatus.CREATED);
+		return responseCustomerDTO;
 	}
 
 	@Override
-	public ResponseEntity<ResponseCustomerDTO> update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
+	public ResponseCustomerDTO update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
 		customer = repository.findById(customerId).get();
 		customer = UpdateModel.customer(customer, requestCustomerDTO);
 		customer = Cryptography.encode(customer);
 		repository.save(customer);
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Dados do cliente " + customer.getName() + " salvo com sucesso!!");
-		return new ResponseEntity<ResponseCustomerDTO>(responseCustomerDTO, HttpStatus.OK);
+		return responseCustomerDTO;
 	}
 
 	@Override
-	public ResponseEntity<ResponseCustomerDTO> delete(UUID customerId) {
+	public Customer delete(UUID customerId) {
 		customer = repository.findById(customerId).get();
 		customer = mapper.customerDelete(customer);
 		repository.save(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " deletado com sucesso!!");
-		return new ResponseEntity<ResponseCustomerDTO>(HttpStatus.NO_CONTENT);
+		return customer;
 	}
 
 	@Override
