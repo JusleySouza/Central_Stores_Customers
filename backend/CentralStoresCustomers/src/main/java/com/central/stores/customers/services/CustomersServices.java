@@ -17,11 +17,11 @@ public interface CustomersServices {
 
 	public Customer findByCpf(String cpf);
 
-	public ResponseEntity<ResponseCustomerDTO> create(RequestCustomerDTO requestCustomerDTO);
+	public ResponseCustomerDTO create(RequestCustomerDTO requestCustomerDTO);
 
-	public ResponseEntity<ResponseCustomerDTO> update(RequestCustomerDTO requestCustomerDTO, UUID customerId);
+	public ResponseCustomerDTO update(RequestCustomerDTO requestCustomerDTO, UUID customerId);
 
-	public ResponseEntity<ResponseCustomerDTO> delete(UUID id);
+	public Customer delete(UUID id);
 	
 	public List<Customer> findByNeighborhood(String neighborhood);
 
