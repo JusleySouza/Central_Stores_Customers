@@ -79,17 +79,18 @@ class CustomerServicesImplementTest {
 	@Test
 	public void delete() {
 		customer = Cryptography.encode(customer);
+		customer.setActive(false);
 		when(repository.findById(any())).thenReturn(Optional.of(customer));
 		when(mapper.customerDelete(any())).thenReturn(customer);
-		ResponseEntity<ResponseCustomerDTO> customers = services.delete(UUID.randomUUID());
-		assertTrue(customers.getStatusCodeValue()== HttpStatus.NO_CONTENT.value());
+		Customer customers = services.delete(UUID.randomUUID());
+		assertTrue(customers.getActive().equals(false));
 	}
 	
 	@Test
 	public void create() {
 		when(mapper.toModel(any())).thenReturn(customer);
 		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
-		ResponseEntity<ResponseCustomerDTO> customer = services.create(requestCustomerDTO);
+		ResponseCustomerDTO customer = services.create(requestCustomerDTO);
 		assertNotNull(customer);
 	}
 	
@@ -98,7 +99,7 @@ class CustomerServicesImplementTest {
 		when(repository.findById(any())).thenReturn(Optional.of(customer));
 		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		
-		ResponseEntity<ResponseCustomerDTO> customer = services.update(requestCustomerDTO, UUID.randomUUID());
+		ResponseCustomerDTO customer = services.update(requestCustomerDTO, UUID.randomUUID());
 		assertNotNull(customer);
 	}
 	
