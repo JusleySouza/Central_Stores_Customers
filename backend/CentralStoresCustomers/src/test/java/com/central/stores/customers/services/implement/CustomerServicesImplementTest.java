@@ -7,7 +7,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.central.stores.customers.crypto.Cryptography;
 import com.central.stores.customers.mapper.CustomerMapper;
-import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
@@ -44,7 +42,6 @@ class CustomerServicesImplementTest {
 	private Customer customer;
 	private RequestCustomerDTO requestCustomerDTO;
 	private ResponseCustomerDTO responseCustomerDTO;
-	private ResponseEntity<Customer> responseEntity;
 	
 	@BeforeEach
 	void setUp() {
@@ -58,7 +55,7 @@ class CustomerServicesImplementTest {
 	public void findByCpf() throws Exception {
 		customer = Cryptography.encode(customer);
 		when(repository.findByCpf(anyString())).thenReturn(customer);
-		Customer cust = services.findByCpf("12365478965").getBody();
+		Customer cust = services.findByCpf("12365478965");
 		assertEquals(cust, customer);
 	}
 
@@ -66,7 +63,7 @@ class CustomerServicesImplementTest {
 	public void findByNeighborhood() {
 		customer = Cryptography.encode(customer);
 		when(repository.findAllByActiveTrueAndAddressNeighborhood(anyString())).thenReturn(List.of(customer));
-		ResponseEntity<List<Customer>> listCustomers = services.findByNeighborhood("teste");
+		List<Customer> listCustomers = services.findByNeighborhood("teste");
 		assertNotNull(listCustomers);
 	}
 	
@@ -74,7 +71,7 @@ class CustomerServicesImplementTest {
 	public void findAll() {
 		customer = Cryptography.encode(customer);
 		when(repository.findAllByActiveTrue()).thenReturn(List.of(customer));
-		ResponseEntity<List<Customer>> customers = services.findAll();
+		List<Customer> customers = services.findAll();
 		assertNotNull(customers);
 		
 	}
