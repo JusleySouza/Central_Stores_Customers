@@ -69,7 +69,7 @@ class CustomersControllerTest {
 	@Test
 	void create() throws Exception {
 		mockMvc.perform(post(CONTEXT_PATH).contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isOk());
+				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isCreated());
 
 	}
 	
@@ -82,7 +82,7 @@ class CustomersControllerTest {
 	
 	@Test
 	void delete() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete(CONTEXT_PATH + CUSTOMER_ID)).andExpect(status().isOk());
+		mockMvc.perform(MockMvcRequestBuilders.delete(CONTEXT_PATH + CUSTOMER_ID)).andExpect(status().isNoContent());
 	}
 	
 }
