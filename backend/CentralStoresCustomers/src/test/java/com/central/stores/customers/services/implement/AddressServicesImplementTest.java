@@ -54,14 +54,14 @@ class AddressServicesImplementTest {
 	public void create() {
 		when(mapper.toModel(any())).thenReturn(address);
 		when(customerRepository.findById(any())).thenReturn(Optional.of(customer));
-		ResponseEntity<Address> address = services.create(addressDTO, UUID.randomUUID());
+		Address address = services.create(addressDTO, UUID.randomUUID());
 		assertNotNull(address);
 	}
 
 	@Test
 	public void update() {
 		when(addressRepository.findById(any())).thenReturn(Optional.of(address));
-		ResponseEntity<Address> address = services.update(addressDTO, UUID.randomUUID());
+		Address address = services.update(addressDTO, UUID.randomUUID());
 		assertNotNull(address);
 	}
 	
