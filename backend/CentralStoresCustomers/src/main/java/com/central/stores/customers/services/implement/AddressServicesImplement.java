@@ -33,23 +33,23 @@ public class AddressServicesImplement implements AddressServices {
 	private Customer customer;
 
 	@Override
-	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID customerId) {
+	public Address create(AddressDTO requestAddressDTO, UUID customerId) {
 		address = mapper.toModel(requestAddressDTO);
 		addressRepository.save(address);
 		customer = customerRepository.findById(customerId).get();
 		customer.setAddress(address);
 		customerRepository.save(customer);
 		LoggerConfig.LOGGER_ADDRESS.info("Endereço do cliente " + customer.getName() + " salvo com sucesso!!");
-		return new ResponseEntity<Address>(address, HttpStatus.CREATED);
+		return address;
 	}
 
 	@Override
-	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId) {
+	public Address update(AddressDTO requestAddressDTO, UUID addressId) {
 		address = addressRepository.findById(addressId).get();
 		address = UpdateModel.address(address, requestAddressDTO);
 		addressRepository.save(address);
 		LoggerConfig.LOGGER_ADDRESS.info("Endereço atualizado com sucesso!!");
-		return new ResponseEntity<Address>(address, HttpStatus.OK);
+		return address;
 	}
 
 }
