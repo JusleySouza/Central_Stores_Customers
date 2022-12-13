@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -31,19 +32,21 @@ public class CustomersServicesImplement implements CustomersServices {
 	private ResponseCustomerDTO responseCustomerDTO;
 
 	@Override
-	public ResponseEntity<List<Customer>> findAll() {
+	@Cacheable(cacheNames = "Customers", key = "#root.method.name")
+	public List<Customer> findAll() {
 		List<Customer> listCustomer = repository.findAllByActiveTrue();
 		listCustomer.forEach(customer -> customer = Cryptography.decode(customer));
 		LoggerConfig.LOGGER_CUSTOMER.info(" Lista de Clientes executada com sucesso!! ");
-		return new ResponseEntity<List<Customer>>(listCustomer, HttpStatus.OK);
+		return listCustomer;
 	}
 
 	@Override
-	public ResponseEntity<Customer> findByCpf(String cpf) {
+	@Cacheable(cacheNames = "Customers", key = "#cpf")
+	public Customer findByCpf(String cpf) {
 		customer = repository.findByCpf(Cryptography.encodeCpf(cpf));
 		customer = Cryptography.decode(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Cliente encontrado com sucesso!! ");
-		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+		return customer;
 	}
 
 	@Override
@@ -77,11 +80,12 @@ public class CustomersServicesImplement implements CustomersServices {
 	}
 
 	@Override
-	public ResponseEntity<List<Customer>> findByNeighborhood(String neighborhood) {
+	@Cacheable(cacheNames = "Customers", key = "#neighborhood")
+	public List<Customer> findByNeighborhood(String neighborhood) {
 		List<Customer> listCustomers = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood);
 		listCustomers.forEach(customer -> customer = Cryptography.decode(customer));
 		LoggerConfig.LOGGER_CUSTOMER.info(" Lista de Clientes por bairro executada com sucesso!! ");
-		return new ResponseEntity<List<Customer>>(listCustomers, HttpStatus.OK);
+		return listCustomers;
 	}
 	
 }
