@@ -34,18 +34,19 @@ public class CustomerController {
 
 	@PostMapping
 	public ResponseEntity<ResponseCustomerDTO> create(@RequestBody RequestCustomerDTO requestCustomerDTO) {
-		return services.create(requestCustomerDTO);
+		return new ResponseEntity<ResponseCustomerDTO>( services.create(requestCustomerDTO), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{customerId}")
 	public ResponseEntity<ResponseCustomerDTO> update(@RequestBody RequestCustomerDTO requestCustomerDTO,
 			@PathVariable("customerId") UUID customerId) {
-		return services.update(requestCustomerDTO, customerId);
+		return new ResponseEntity<ResponseCustomerDTO>(services.update(requestCustomerDTO, customerId), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{customerId}")
 	public ResponseEntity<ResponseCustomerDTO> delete(@PathVariable("customerId") UUID customerId){
-		return services.delete(customerId);
+		services.delete(customerId);
+		return new ResponseEntity<ResponseCustomerDTO>( HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("list")
