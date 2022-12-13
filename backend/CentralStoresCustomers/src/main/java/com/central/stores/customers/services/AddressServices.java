@@ -11,8 +11,8 @@ import com.central.stores.customers.model.dto.AddressDTO;
 @Service
 public interface AddressServices {
 
-	public ResponseEntity<Address> create(AddressDTO requestAddressDTO, UUID customerId);
+	public Address create(AddressDTO requestAddressDTO, UUID customerId);
 
-	public ResponseEntity<Address> update(AddressDTO requestAddressDTO, UUID addressId );
+	public Address update(AddressDTO requestAddressDTO, UUID addressId );
 	
 }
