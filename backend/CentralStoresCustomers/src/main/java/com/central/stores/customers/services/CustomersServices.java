@@ -20,7 +20,7 @@ public interface CustomersServices {
 
 	public ResponseEntity<Object> update(RequestCustomerDTO requestCustomerDTO, UUID customerId);
 
-	public ResponseEntity<Object> delete(UUID id);
+	public Customer delete(UUID id);
 	
 	public List<Customer> findByNeighborhood(String neighborhood);
 
