@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.central.stores.customers.config.LoggerConfig;
 import com.central.stores.customers.crypto.Cryptography;
+import com.central.stores.customers.exception.ResourceNotFoundException;
 import com.central.stores.customers.mapper.CustomerMapper;
 import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Customer;
@@ -44,6 +45,11 @@ public class CustomersServicesImplement implements CustomersServices {
 	@Cacheable(cacheNames = "Customers", key = "#cpf")
 	public Customer findByCpf(String cpf) {
 		customer = repository.findByCpf(Cryptography.encodeCpf(cpf));
+		
+		if(customer == null) {
+			throw new ResourceNotFoundException("Nenhum registro encontrado para este cpf!!");
+		}
+		
 		customer = Cryptography.decode(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Cliente encontrado com sucesso!! ");
 		return customer;
@@ -61,10 +67,14 @@ public class CustomersServicesImplement implements CustomersServices {
 
 	@Override
 	public ResponseCustomerDTO update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
-		customer = repository.findById(customerId).get();
+		customer = repository.findById(customerId).orElseThrow(() ->
+		new ResourceNotFoundException("Nenhum registro encontrado para este id!!")
+		);
+		
 		customer = UpdateModel.customer(customer, requestCustomerDTO);
 		customer = Cryptography.encode(customer);
 		repository.save(customer);
+		
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Dados do cliente " + customer.getName() + " salvo com sucesso!!");
 		return responseCustomerDTO;
@@ -83,6 +93,11 @@ public class CustomersServicesImplement implements CustomersServices {
 	@Cacheable(cacheNames = "Customers", key = "#neighborhood")
 	public List<Customer> findByNeighborhood(String neighborhood) {
 		List<Customer> listCustomers = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood);
+		
+		if(listCustomers.isEmpty()) {
+			throw new ResourceNotFoundException("Nenhum registro encontrado para este bairro!!");
+		}
+		
 		listCustomers.forEach(customer -> customer = Cryptography.decode(customer));
 		LoggerConfig.LOGGER_CUSTOMER.info(" Lista de Clientes por bairro executada com sucesso!! ");
 		return listCustomers;
