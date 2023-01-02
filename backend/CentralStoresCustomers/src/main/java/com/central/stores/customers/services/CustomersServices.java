@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
-import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 
 @Service
 public interface CustomersServices {
@@ -21,7 +20,7 @@ public interface CustomersServices {
 
 	public ResponseEntity<Object> update(RequestCustomerDTO requestCustomerDTO, UUID customerId);
 
-	public Customer delete(UUID id);
+	public ResponseEntity<Object> delete(UUID id);
 	
 	public List<Customer> findByNeighborhood(String neighborhood);
 
