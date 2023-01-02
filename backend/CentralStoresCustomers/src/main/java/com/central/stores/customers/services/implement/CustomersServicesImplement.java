@@ -1,7 +1,11 @@
 package com.central.stores.customers.services.implement;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +21,7 @@ import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
+import com.central.stores.customers.model.dto.error.ResponseError;
 import com.central.stores.customers.repository.CustomersRepository;
 import com.central.stores.customers.services.CustomersServices;
 
@@ -29,6 +34,9 @@ public class CustomersServicesImplement implements CustomersServices {
 	@Autowired
 	private CustomerMapper mapper;
 	
+	@Autowired
+	private Validator validator;
+	
 	private Customer customer;
 	private ResponseCustomerDTO responseCustomerDTO;
 
@@ -37,7 +45,7 @@ public class CustomersServicesImplement implements CustomersServices {
 	public List<Customer> findAll() {
 		List<Customer> listCustomer = repository.findAllByActiveTrue();
 		listCustomer.forEach(customer -> customer = Cryptography.decode(customer));
-		LoggerConfig.LOGGER_CUSTOMER.info(" Lista de Clientes executada com sucesso!! ");
+		LoggerConfig.LOGGER_CUSTOMER.info(" Customer List successfully executed!! ");
 		return listCustomer;
 	}
 
@@ -47,28 +55,41 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer = repository.findByCpf(Cryptography.encodeCpf(cpf));
 		
 		if(customer == null) {
-			throw new ResourceNotFoundException("Nenhum registro encontrado para este cpf!!");
+			throw new ResourceNotFoundException("No records found for this cpf!!");
 		}
 		
 		customer = Cryptography.decode(customer);
-		LoggerConfig.LOGGER_CUSTOMER.info("Cliente encontrado com sucesso!! ");
+		LoggerConfig.LOGGER_CUSTOMER.info("Customer found successfully!! ");
 		return customer;
 	}
 
 	@Override
-	public ResponseCustomerDTO create(RequestCustomerDTO requestCustomerDTO) {
+	public ResponseEntity<Object> create(RequestCustomerDTO requestCustomerDTO) {
+		
+		Set<ConstraintViolation<RequestCustomerDTO>> violations = validator.validate(requestCustomerDTO);
+		
+		if(!violations.isEmpty()) {
+			return new ResponseEntity<Object>(ResponseError.createFromValidations(violations), HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		
 		customer = mapper.toModel(requestCustomerDTO);
 		customer = Cryptography.encode(customer);
 		repository.save(customer);
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);
-		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " salvo com sucesso!!");
-		return responseCustomerDTO;
+		LoggerConfig.LOGGER_CUSTOMER.info("Customer " + customer.getName() + " saved successfully!!");
+		return new ResponseEntity<Object>(responseCustomerDTO, HttpStatus.CREATED);
 	}
 
 	@Override
-	public ResponseCustomerDTO update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
+	public ResponseEntity<Object> update(RequestCustomerDTO requestCustomerDTO, UUID customerId) {
+		
+		Set<ConstraintViolation<RequestCustomerDTO>> violations = validator.validate(requestCustomerDTO);
+		
+		if(!violations.isEmpty()) {
+			return new ResponseEntity<Object>(ResponseError.createFromValidations(violations), HttpStatus.UNPROCESSABLE_ENTITY);
+		}
 		customer = repository.findById(customerId).orElseThrow(() ->
-		new ResourceNotFoundException("Nenhum registro encontrado para este id!!")
+		new ResourceNotFoundException("No records found for this id!!")
 		);
 		
 		customer = UpdateModel.customer(customer, requestCustomerDTO);
@@ -76,8 +97,8 @@ public class CustomersServicesImplement implements CustomersServices {
 		repository.save(customer);
 		
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);
-		LoggerConfig.LOGGER_CUSTOMER.info("Dados do cliente " + customer.getName() + " salvo com sucesso!!");
-		return responseCustomerDTO;
+		LoggerConfig.LOGGER_CUSTOMER.info("Customer data " + customer.getName() + " saved successfully!!");
+		return new ResponseEntity<Object>(responseCustomerDTO, HttpStatus.NO_CONTENT);
 	}
 
 	@Override
@@ -85,7 +106,7 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer = repository.findById(customerId).get();
 		customer = mapper.customerDelete(customer);
 		repository.save(customer);
-		LoggerConfig.LOGGER_CUSTOMER.info("Cliente " + customer.getName() + " deletado com sucesso!!");
+		LoggerConfig.LOGGER_CUSTOMER.info("Customer " + customer.getName() + " deleted successfully!!");
 		return customer;
 	}
 
@@ -95,11 +116,11 @@ public class CustomersServicesImplement implements CustomersServices {
 		List<Customer> listCustomers = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood);
 		
 		if(listCustomers.isEmpty()) {
-			throw new ResourceNotFoundException("Nenhum registro encontrado para este bairro!!");
+			throw new ResourceNotFoundException("No records found for this neighborhood!!");
 		}
 		
 		listCustomers.forEach(customer -> customer = Cryptography.decode(customer));
-		LoggerConfig.LOGGER_CUSTOMER.info(" Lista de Clientes por bairro executada com sucesso!! ");
+		LoggerConfig.LOGGER_CUSTOMER.info(" List of Customers by neighborhood successfully executed!! ");
 		return listCustomers;
 	}
 	
