@@ -98,16 +98,16 @@ public class CustomersServicesImplement implements CustomersServices {
 		
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Customer data " + customer.getName() + " saved successfully!!");
-		return new ResponseEntity<Object>(responseCustomerDTO, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
 
 	@Override
-	public ResponseEntity<Object> delete(UUID customerId) {
+	public Customer delete(UUID customerId) {
 		customer = repository.findById(customerId).get();
 		customer = mapper.customerDelete(customer);
 		repository.save(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Customer " + customer.getName() + " deleted successfully!!");
-		return new ResponseEntity<Object>(customer, HttpStatus.NO_CONTENT);
+		return customer;
 	}
 
 	@Override
