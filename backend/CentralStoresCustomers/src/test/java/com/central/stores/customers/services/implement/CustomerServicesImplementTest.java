@@ -82,7 +82,7 @@ class CustomerServicesImplementTest {
 		customer.setActive(false);
 		when(repository.findById(any())).thenReturn(Optional.of(customer));
 		when(mapper.customerDelete(any())).thenReturn(customer);
-		Customer customers = services.delete(UUID.randomUUID());
+		Customer customers = (Customer) services.delete(UUID.randomUUID()).getBody();
 		assertTrue(customers.getActive().equals(false));
 	}
 	
