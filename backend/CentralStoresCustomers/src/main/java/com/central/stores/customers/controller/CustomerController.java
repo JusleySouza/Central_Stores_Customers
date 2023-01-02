@@ -42,9 +42,9 @@ public class CustomerController {
 	}
 	
 	@DeleteMapping("/{customerId}")
-	public ResponseEntity<ResponseCustomerDTO> delete(@PathVariable("customerId") UUID customerId){
+	public ResponseEntity<Object> delete(@PathVariable("customerId") UUID customerId){
 		services.delete(customerId);
-		return new ResponseEntity<ResponseCustomerDTO>( HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Object>( HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("list")
