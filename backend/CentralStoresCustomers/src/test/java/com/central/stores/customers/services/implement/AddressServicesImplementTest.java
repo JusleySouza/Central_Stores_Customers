@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
 
 import com.central.stores.customers.mapper.AddressMapper;
 import com.central.stores.customers.model.Address;
@@ -54,14 +52,14 @@ class AddressServicesImplementTest {
 	public void create() {
 		when(mapper.toModel(any())).thenReturn(address);
 		when(customerRepository.findById(any())).thenReturn(Optional.of(customer));
-		Address address = services.create(addressDTO, UUID.randomUUID());
+		Address address = (Address) services.create(addressDTO, UUID.randomUUID()).getBody();
 		assertNotNull(address);
 	}
 
 	@Test
 	public void update() {
 		when(addressRepository.findById(any())).thenReturn(Optional.of(address));
-		Address address = services.update(addressDTO, UUID.randomUUID());
+		Address address = (Address) services.update(addressDTO, UUID.randomUUID()).getBody();
 		assertNotNull(address);
 	}
 	

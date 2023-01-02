@@ -90,7 +90,7 @@ class CustomerServicesImplementTest {
 	public void create() {
 		when(mapper.toModel(any())).thenReturn(customer);
 		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
-		ResponseCustomerDTO customer = services.create(requestCustomerDTO);
+		ResponseCustomerDTO customer = (ResponseCustomerDTO) services.create(requestCustomerDTO).getBody();
 		assertNotNull(customer);
 	}
 	
@@ -99,7 +99,7 @@ class CustomerServicesImplementTest {
 		when(repository.findById(any())).thenReturn(Optional.of(customer));
 		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		
-		ResponseCustomerDTO customer = services.update(requestCustomerDTO, UUID.randomUUID());
+		ResponseCustomerDTO customer = (ResponseCustomerDTO) services.update(requestCustomerDTO, UUID.randomUUID()).getBody();
 		assertNotNull(customer);
 	}
 	
