@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.central.stores.customers.exception.DuplicateDocumentsException;
 import com.central.stores.customers.exception.ExceptionResponse;
 import com.central.stores.customers.exception.ResourceNotFoundException;
 
@@ -29,6 +30,13 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
 		ExceptionResponse exceptionResponse = new ExceptionResponse(
 				new Date(), exception.getMessage(), request.getDescription(false));
 		return new  ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DuplicateDocumentsException.class)
+	public final ResponseEntity<ExceptionResponse> handleDuplicateDocumentsExceptions(Exception exception, WebRequest request){
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(), exception.getMessage(), request.getDescription(false));
+		return new  ResponseEntity<>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
 }
