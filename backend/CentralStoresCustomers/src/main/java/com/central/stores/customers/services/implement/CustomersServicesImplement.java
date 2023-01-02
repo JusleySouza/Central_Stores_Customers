@@ -102,12 +102,12 @@ public class CustomersServicesImplement implements CustomersServices {
 	}
 
 	@Override
-	public Customer delete(UUID customerId) {
+	public ResponseEntity<Object> delete(UUID customerId) {
 		customer = repository.findById(customerId).get();
 		customer = mapper.customerDelete(customer);
 		repository.save(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Customer " + customer.getName() + " deleted successfully!!");
-		return customer;
+		return new ResponseEntity<Object>(customer, HttpStatus.NO_CONTENT);
 	}
 
 	@Override
