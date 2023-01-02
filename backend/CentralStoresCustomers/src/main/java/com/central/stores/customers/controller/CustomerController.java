@@ -21,8 +21,6 @@ import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.services.CustomersServices;
 
-import lombok.Generated;
-
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -33,14 +31,14 @@ public class CustomerController {
 	
 
 	@PostMapping
-	public ResponseEntity<ResponseCustomerDTO> create(@RequestBody RequestCustomerDTO requestCustomerDTO) {
-		return new ResponseEntity<ResponseCustomerDTO>( services.create(requestCustomerDTO), HttpStatus.CREATED);
+	public ResponseEntity<Object> create(@RequestBody RequestCustomerDTO requestCustomerDTO) {
+		return services.create(requestCustomerDTO);
 	}
 
 	@PutMapping("/{customerId}")
-	public ResponseEntity<ResponseCustomerDTO> update(@RequestBody RequestCustomerDTO requestCustomerDTO,
+	public ResponseEntity<Object> update(@RequestBody RequestCustomerDTO requestCustomerDTO,
 			@PathVariable("customerId") UUID customerId) {
-		return new ResponseEntity<ResponseCustomerDTO>(services.update(requestCustomerDTO, customerId), HttpStatus.OK);
+		return services.update(requestCustomerDTO, customerId);
 	}
 	
 	@DeleteMapping("/{customerId}")
