@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.central.stores.customers.config.LoggerConfig;
 import com.central.stores.customers.crypto.Cryptography;
+import com.central.stores.customers.exception.DuplicateDocumentsException;
 import com.central.stores.customers.exception.ResourceNotFoundException;
 import com.central.stores.customers.mapper.CustomerMapper;
 import com.central.stores.customers.mapper.UpdateModel;
@@ -55,6 +56,7 @@ public class CustomersServicesImplement implements CustomersServices {
 		customer = repository.findByCpf(Cryptography.encodeCpf(cpf));
 		
 		if(customer == null) {
+			LoggerConfig.LOGGER_CUSTOMER.error("No records found for this cpf!!");
 			throw new ResourceNotFoundException("No records found for this cpf!!");
 		}
 		
@@ -69,12 +71,21 @@ public class CustomersServicesImplement implements CustomersServices {
 		Set<ConstraintViolation<RequestCustomerDTO>> violations = validator.validate(requestCustomerDTO);
 		
 		if(!violations.isEmpty()) {
+			LoggerConfig.LOGGER_CUSTOMER.error("Validation error");
 			return new ResponseEntity<Object>(ResponseError.createFromValidations(violations), HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
 		customer = mapper.toModel(requestCustomerDTO);
 		customer = Cryptography.encode(customer);
+		
+		String message = duplicateDocumentValidator(customer);
+		if(!message.isEmpty()) {
+			LoggerConfig.LOGGER_CUSTOMER.error("Duplicate documents");
+			throw new DuplicateDocumentsException(message);
+		}
+		
 		repository.save(customer);
+		
 		responseCustomerDTO = mapper.modelToResponseCustomerDTO(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Customer " + customer.getName() + " saved successfully!!");
 		return new ResponseEntity<Object>(responseCustomerDTO, HttpStatus.CREATED);
@@ -86,6 +97,7 @@ public class CustomersServicesImplement implements CustomersServices {
 		Set<ConstraintViolation<RequestCustomerDTO>> violations = validator.validate(requestCustomerDTO);
 		
 		if(!violations.isEmpty()) {
+			LoggerConfig.LOGGER_CUSTOMER.error("Validation error");
 			return new ResponseEntity<Object>(ResponseError.createFromValidations(violations), HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		customer = repository.findById(customerId).orElseThrow(() ->
@@ -103,7 +115,9 @@ public class CustomersServicesImplement implements CustomersServices {
 
 	@Override
 	public Customer delete(UUID customerId) {
-		customer = repository.findById(customerId).get();
+		customer = repository.findById(customerId).orElseThrow(() ->
+		new ResourceNotFoundException("No records found for this id!!")
+		);
 		customer = mapper.customerDelete(customer);
 		repository.save(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Customer " + customer.getName() + " deleted successfully!!");
@@ -116,12 +130,30 @@ public class CustomersServicesImplement implements CustomersServices {
 		List<Customer> listCustomers = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood);
 		
 		if(listCustomers.isEmpty()) {
+			LoggerConfig.LOGGER_CUSTOMER.error("No records found for this neighborhood!!");
 			throw new ResourceNotFoundException("No records found for this neighborhood!!");
 		}
 		
 		listCustomers.forEach(customer -> customer = Cryptography.decode(customer));
 		LoggerConfig.LOGGER_CUSTOMER.info(" List of Customers by neighborhood successfully executed!! ");
 		return listCustomers;
+	}
+	
+	
+	private String duplicateDocumentValidator(Customer customer) {
+		String message = "";
+		
+		Customer customerEntityRg = repository.findByRg(customer.getRg());
+		Customer customerEntityCpf = repository.findByCpf(customer.getCpf());
+		
+		if(customerEntityCpf != null && customerEntityRg != null) {
+			message = "Documents alread registered";
+		}else if(customerEntityCpf != null) {
+			message = "Cpf alread registered";	
+		}else if(customerEntityRg != null) {
+			message = "Rg alread registered";	
+		}
+		return message;
 	}
 	
 }
