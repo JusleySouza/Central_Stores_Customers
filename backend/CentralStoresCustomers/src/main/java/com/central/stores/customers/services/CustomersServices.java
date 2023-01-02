@@ -17,9 +17,9 @@ public interface CustomersServices {
 
 	public Customer findByCpf(String cpf);
 
-	public ResponseCustomerDTO create(RequestCustomerDTO requestCustomerDTO);
+	public ResponseEntity<Object> create(RequestCustomerDTO requestCustomerDTO);
 
-	public ResponseCustomerDTO update(RequestCustomerDTO requestCustomerDTO, UUID customerId);
+	public ResponseEntity<Object> update(RequestCustomerDTO requestCustomerDTO, UUID customerId);
 
 	public Customer delete(UUID id);
 	
