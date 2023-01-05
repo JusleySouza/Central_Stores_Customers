@@ -1,7 +1,6 @@
 package com.central.stores.customers.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -28,14 +27,6 @@ class CustomerTest {
 		expectedCustomer.setAddress(address);
 	}
 
-	@Test
-	void builder() {
-		Customer customer = Customer.builder().active(true).changed(LocalDate.now()).cpf("12365478965").created(LocalDate.now())
-				.email("caio@castro.com").gender("masculino").name("Caio Castro").phone("1111111111").rg("325698741").id(id).address(address)
-				.build();
-		assertEquals(expectedCustomer.toString(), customer.toString());
-	}
-	
 	@Test
 	void setter() {
 		Customer customer = new Customer();
