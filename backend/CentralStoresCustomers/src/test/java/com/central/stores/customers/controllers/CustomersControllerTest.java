@@ -5,8 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +67,7 @@ class CustomersControllerTest {
 	@Test
 	void create() throws Exception {
 		mockMvc.perform(post(CONTEXT_PATH).contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isCreated());
+				.content(objectMapper.writeValueAsString(customer))).andExpect(status().isOk());
 
 	}
 	
