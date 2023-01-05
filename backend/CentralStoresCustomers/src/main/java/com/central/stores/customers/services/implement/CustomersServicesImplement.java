@@ -147,11 +147,11 @@ public class CustomersServicesImplement implements CustomersServices {
 		Customer customerEntityCpf = repository.findByCpf(customer.getCpf());
 		
 		if(customerEntityCpf != null && customerEntityRg != null) {
-			message = "Documents alread registered";
+			message = "Documents already registered";
 		}else if(customerEntityCpf != null) {
-			message = "Cpf alread registered";	
+			message = "Cpf already registered";	
 		}else if(customerEntityRg != null) {
-			message = "Rg alread registered";	
+			message = "Rg already registered";	
 		}
 		return message;
 	}
