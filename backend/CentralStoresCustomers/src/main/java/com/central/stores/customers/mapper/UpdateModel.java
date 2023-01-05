@@ -1,7 +1,6 @@
 package com.central.stores.customers.mapper;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import com.central.stores.customers.model.Address;
 import com.central.stores.customers.model.Customer;
