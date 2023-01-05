@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
-import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.services.CustomersServices;
 
 @RestController
