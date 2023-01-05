@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 
-import com.central.stores.customers.model.dto.FieldError;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
+@Generated
 public class ResponseError {
 	
 	private final String MESSAGE = "Validation Error";
