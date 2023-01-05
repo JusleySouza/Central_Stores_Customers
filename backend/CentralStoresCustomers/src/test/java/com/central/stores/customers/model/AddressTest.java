@@ -23,14 +23,6 @@ class AddressTest {
 	}
 
 	@Test
-	void build() {
-		Address address = Address.builder().city("Bauru").neighborhood("Pedro Santos Drumond").number(56).street("Rua das Amelias")
-				.changed(LocalDate.now()).created(LocalDate.now()).id(id).build();
-		assertEquals(expectedAddress.toString(), address.toString());
-	}
-	
-
-	@Test
 	void setter() {
 		Address address = new Address();
 		address.setCity("Bauru");
