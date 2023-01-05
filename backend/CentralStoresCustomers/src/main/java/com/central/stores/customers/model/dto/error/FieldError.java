@@ -1,8 +1,12 @@
-package com.central.stores.customers.model.dto;
+package com.central.stores.customers.model.dto.error;
 
-import lombok.Data;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@Generated
 public class FieldError {
 
 	private String field;
