@@ -13,24 +13,24 @@ services:
       - redis
       
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/customers
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=1234
-      - SPRING_JPA_HIBERNATE_DDL-AUTO=update
-      - SPRING_DATASOURCE_DRIVERCLASSNAME=org.postgresql.Driver
-      - SPRING_JPA_SHOW-SQL=false
+      - SPRING_DATASOURCE_URL=${CONNECTION_STRING}
+      - SPRING_DATASOURCE_USERNAME=${USERNAME_DB}
+      - SPRING_DATASOURCE_PASSWORD=${PASSWORD_DB}
+      - SPRING_JPA_HIBERNATE_DDL-AUTO=${DDL_AUTO}
+      - SPRING_DATASOURCE_DRIVERCLASSNAME=${DRIVER}
+      - SPRING_JPA_SHOW-SQL=${SHOW_SQL}
 
-      - SPRING_CACHE_TYPE=redis
-      - SPRING_REDIS_HOST=redis
-      - SPRING_REDIS_PORT=6379
-      - SPRING_CACHE_REDIS_TIME-TO-LIVE=30000
+      - SPRING_CACHE_TYPE=${CACHE_TYPE}
+      - SPRING_REDIS_HOST=${REDIS_HOST}
+      - SPRING_REDIS_PORT=${REDIS_PORT}
+      - SPRING_CACHE_REDIS_TIME-TO-LIVE=${REDIS_TIME_TO_LIVE}
 
   db:
     image: 'postgres:13.1-alpine'
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=customers
+      - POSTGRES_USER=${USERNAME}
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_DB=${DB}
 
   redis:
     image: redis
