@@ -14,6 +14,9 @@ import com.central.stores.customers.exception.DuplicateDocumentsException;
 import com.central.stores.customers.exception.ExceptionResponse;
 import com.central.stores.customers.exception.ResourceNotFoundException;
 
+import lombok.Generated;
+
+@Generated
 @ControllerAdvice
 @RestController
 public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
