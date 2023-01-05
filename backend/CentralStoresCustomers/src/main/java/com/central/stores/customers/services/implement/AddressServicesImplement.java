@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.central.stores.customers.config.LoggerConfig;
+import com.central.stores.customers.exception.ResourceNotFoundException;
 import com.central.stores.customers.mapper.AddressMapper;
 import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Address;
@@ -69,11 +70,13 @@ public class AddressServicesImplement implements AddressServices {
 					HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
-		address = addressRepository.findById(addressId).get();
+		address = addressRepository.findById(addressId).orElseThrow(() ->
+		new ResourceNotFoundException("No records found for this id!!")
+		);
 		address = UpdateModel.address(address, requestAddressDTO);
 		addressRepository.save(address);
 		LoggerConfig.LOGGER_ADDRESS.info("Address successfully updated!!");
-		return new ResponseEntity<Object>(address, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	
 	}
 
