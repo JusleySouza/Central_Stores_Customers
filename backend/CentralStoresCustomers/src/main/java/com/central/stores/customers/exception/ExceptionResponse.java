@@ -3,8 +3,10 @@ package com.central.stores.customers.exception;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.Generated;
 import lombok.Getter;
 
+@Generated
 @Getter
 public class ExceptionResponse implements Serializable{
 	
