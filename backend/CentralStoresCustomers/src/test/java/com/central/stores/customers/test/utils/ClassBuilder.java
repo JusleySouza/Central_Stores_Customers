@@ -12,28 +12,57 @@ import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 public final class ClassBuilder {
 
 	public static Address addressBuilder() {
-		return Address.builder().city("Bauru").neighborhood("Pedro Santos Drumond").number(56).street("Rua das Amelias")
-				.changed(LocalDate.now()).created(LocalDate.now()).id(UUID.randomUUID()).build();
+		Address address = new Address();
+		address.setCity("Bauru");
+		address.setNeighborhood("Pedro Santos Drumond");
+		address.setNumber(56);
+		address.setStreet("Rua das Amelias");
+		address.setChanged(LocalDate.now());
+		address.setCreated(LocalDate.now());
+		address.setId(UUID.randomUUID());
+		return address;
 	}
 
 	public static AddressDTO addressDTOBuider() {
-		return AddressDTO.builder().city("Bauru").neighborhood("Pedro Santos Drumond").number(56)
-				.street("Rua das Amelias").build();
+		AddressDTO addressDTO = new AddressDTO();
+		addressDTO.setCity("Bauru");
+		addressDTO.setNeighborhood("Pedro Santos Drumond");
+		addressDTO.setNumber(56);
+		addressDTO.setStreet("Rua das Amelias");
+		return addressDTO;
 	}
 
 	public static Customer customerBuider() {
-		return Customer.builder().active(true).changed(LocalDate.now()).cpf("12365478965").created(LocalDate.now())
-				.email("caio@castro.com").gender("masculino").name("Caio Castro").phone("1111111111").rg("325698741").id(UUID.randomUUID())
-				.build();
+		 Customer customer = new Customer();
+		 customer.setActive(true);
+		 customer.setChanged(LocalDate.now());
+		 customer.setCpf("12365478965");
+		 customer.setCreated(LocalDate.now());
+		 customer.setEmail("caio@castro.com");
+		 customer.setGender("masculino");
+		 customer.setName("Caio Castro");
+		 customer.setPhone("1111111111");
+		 customer.setRg("325698741");
+		 customer.setId(UUID.randomUUID());
+		 return customer;
 	}
 	
 	public static RequestCustomerDTO requestCustomerDTOBuider() {
-		return RequestCustomerDTO.builder().cpf("12365478965").email("caio@castro.com").gender("masculino")
-				.name("Caio Castro").phone("1111111111").rg("325698741").build();
+		 RequestCustomerDTO requestCustomerDTO = new RequestCustomerDTO();
+		 requestCustomerDTO.setCpf("12365478965");
+		 requestCustomerDTO.setEmail("caio@castro.com");
+		 requestCustomerDTO.setGender("masculino");
+		 requestCustomerDTO.setName("Caio Castro");
+		 requestCustomerDTO.setPhone("1111111111");
+		 requestCustomerDTO.setRg("325698741");
+		 return requestCustomerDTO;
 	}
 	
 	public static ResponseCustomerDTO responseCustomerDTOBuider() {
-		return ResponseCustomerDTO.builder().name("Caio Castro").id(UUID.randomUUID()).build();
+		 ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
+		 responseCustomerDTO.setName("Caio Castro");
+		 responseCustomerDTO.setId(UUID.randomUUID());
+		 return responseCustomerDTO;
 	}
 	
 }
