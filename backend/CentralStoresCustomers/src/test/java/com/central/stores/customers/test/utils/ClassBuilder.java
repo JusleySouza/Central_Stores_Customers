@@ -23,7 +23,7 @@ public final class ClassBuilder {
 		return address;
 	}
 
-	public static AddressDTO addressDTOBuider() {
+	public static AddressDTO addressDTOBuilder() {
 		AddressDTO addressDTO = new AddressDTO();
 		addressDTO.setCity("Bauru");
 		addressDTO.setNeighborhood("Pedro Santos Drumond");
@@ -32,7 +32,7 @@ public final class ClassBuilder {
 		return addressDTO;
 	}
 
-	public static Customer customerBuider() {
+	public static Customer customerBuilder() {
 		 Customer customer = new Customer();
 		 customer.setActive(true);
 		 customer.setChanged(LocalDate.now());
@@ -47,7 +47,7 @@ public final class ClassBuilder {
 		 return customer;
 	}
 	
-	public static RequestCustomerDTO requestCustomerDTOBuider() {
+	public static RequestCustomerDTO requestCustomerDTOBuilder() {
 		 RequestCustomerDTO requestCustomerDTO = new RequestCustomerDTO();
 		 requestCustomerDTO.setCpf("12365478965");
 		 requestCustomerDTO.setEmail("caio@castro.com");
@@ -58,7 +58,7 @@ public final class ClassBuilder {
 		 return requestCustomerDTO;
 	}
 	
-	public static ResponseCustomerDTO responseCustomerDTOBuider() {
+	public static ResponseCustomerDTO responseCustomerDTOBuilder() {
 		 ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
 		 responseCustomerDTO.setName("Caio Castro");
 		 responseCustomerDTO.setId(UUID.randomUUID());

@@ -13,7 +13,7 @@ class AddressDTOTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		expectedAddressDTO = ClassBuilder.addressDTOBuider();
+		expectedAddressDTO = ClassBuilder.addressDTOBuilder();
 	}
 
 	@Test

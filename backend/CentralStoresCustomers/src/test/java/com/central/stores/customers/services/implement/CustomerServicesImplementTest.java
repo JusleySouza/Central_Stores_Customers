@@ -60,9 +60,9 @@ class CustomerServicesImplementTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		customer = ClassBuilder.customerBuider();
-		requestCustomerDTO = ClassBuilder.requestCustomerDTOBuider();
-		responseCustomerDTO = ClassBuilder.responseCustomerDTOBuider();
+		customer = ClassBuilder.customerBuilder();
+		requestCustomerDTO = ClassBuilder.requestCustomerDTOBuilder();
+		responseCustomerDTO = ClassBuilder.responseCustomerDTOBuilder();
 		
 		validator = new LocalValidatorFactoryBean();
 		validator.afterPropertiesSet();

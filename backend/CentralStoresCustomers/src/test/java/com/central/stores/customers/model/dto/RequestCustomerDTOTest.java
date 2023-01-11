@@ -13,7 +13,7 @@ class RequestCustomerDTOTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		expectedREquestCustomerDTO = ClassBuilder.requestCustomerDTOBuider();
+		expectedREquestCustomerDTO = ClassBuilder.requestCustomerDTOBuilder();
 	}
 
 	@Test

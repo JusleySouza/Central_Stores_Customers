@@ -42,7 +42,7 @@ class CustomersControllerTest {
 	@BeforeEach
 	void setUp() {
 		objectMapper = new ObjectMapper();
-		customer = ClassBuilder.customerBuider();
+		customer = ClassBuilder.customerBuilder();
 		objectMapper.registerModule(new JavaTimeModule());
 	}
 

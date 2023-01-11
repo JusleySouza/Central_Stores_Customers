@@ -57,9 +57,9 @@ class AddressServicesImplementTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		customer = ClassBuilder.customerBuider();
+		customer = ClassBuilder.customerBuilder();
 		address = ClassBuilder.addressBuilder();
-		addressDTO = ClassBuilder.addressDTOBuider();
+		addressDTO = ClassBuilder.addressDTOBuilder();
 		
 		validator = new LocalValidatorFactoryBean();
 		validator.afterPropertiesSet();

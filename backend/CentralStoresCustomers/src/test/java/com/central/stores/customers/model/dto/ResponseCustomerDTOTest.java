@@ -17,7 +17,7 @@ class ResponseCustomerDTOTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		id = UUID.randomUUID();
-		expectedResponseCustomerDTO = ClassBuilder.responseCustomerDTOBuider();
+		expectedResponseCustomerDTO = ClassBuilder.responseCustomerDTOBuilder();
 		expectedResponseCustomerDTO.setId(id);
 	}
 

@@ -22,7 +22,7 @@ class CustomerTest {
 	void setUp() throws Exception {
 		id = UUID.randomUUID();
 		address = ClassBuilder.addressBuilder();
-		expectedCustomer = ClassBuilder.customerBuider();
+		expectedCustomer = ClassBuilder.customerBuilder();
 		expectedCustomer.setId(id);
 		expectedCustomer.setAddress(address);
 	}
