@@ -4,9 +4,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
-import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +50,6 @@ class AddressControllerTest {
 	void create() throws Exception {
 		mockMvc.perform(post(CONTEXT_PATH + CUSTOMER_ID + PATH).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(address))).andExpect(status().isOk());
-
 	}
 	
 	@Test

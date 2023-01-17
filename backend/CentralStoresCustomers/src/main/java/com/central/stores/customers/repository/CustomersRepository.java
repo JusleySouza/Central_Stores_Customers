@@ -10,5 +10,6 @@ import com.central.stores.customers.model.Customer;
 public interface CustomersRepository extends JpaRepository<Customer, UUID> {
 	List<Customer> findAllByActiveTrue();
 	Customer findByCpf(String cpf);
+	Customer findByRg(String rg);
 	List<Customer> findAllByActiveTrueAndAddressNeighborhood(String neighborhood);
 }

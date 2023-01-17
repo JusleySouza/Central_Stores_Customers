@@ -5,8 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +42,7 @@ class CustomersControllerTest {
 	@BeforeEach
 	void setUp() {
 		objectMapper = new ObjectMapper();
-		customer = ClassBuilder.customerBuider();
+		customer = ClassBuilder.customerBuilder();
 		objectMapper.registerModule(new JavaTimeModule());
 	}
 
@@ -82,7 +80,7 @@ class CustomersControllerTest {
 	
 	@Test
 	void delete() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete(CONTEXT_PATH + CUSTOMER_ID)).andExpect(status().isOk());
+		mockMvc.perform(MockMvcRequestBuilders.delete(CONTEXT_PATH + CUSTOMER_ID)).andExpect(status().isNoContent());
 	}
 	
 }

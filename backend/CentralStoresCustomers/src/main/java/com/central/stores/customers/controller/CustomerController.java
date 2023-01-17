@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
-import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.services.CustomersServices;
-
-import lombok.Generated;
 
 @RestController
 @RequestMapping("/customers")
@@ -32,33 +30,34 @@ public class CustomerController {
 	
 
 	@PostMapping
-	public ResponseEntity<ResponseCustomerDTO> create(@RequestBody RequestCustomerDTO requestCustomerDTO) {
+	public ResponseEntity<Object> create(@RequestBody RequestCustomerDTO requestCustomerDTO) {
 		return services.create(requestCustomerDTO);
 	}
 
 	@PutMapping("/{customerId}")
-	public ResponseEntity<ResponseCustomerDTO> update(@RequestBody RequestCustomerDTO requestCustomerDTO,
+	public ResponseEntity<Object> update(@RequestBody RequestCustomerDTO requestCustomerDTO,
 			@PathVariable("customerId") UUID customerId) {
 		return services.update(requestCustomerDTO, customerId);
 	}
 	
 	@DeleteMapping("/{customerId}")
-	public ResponseEntity<ResponseCustomerDTO> delete(@PathVariable("customerId") UUID customerId){
-		return services.delete(customerId);
+	public ResponseEntity<Object> delete(@PathVariable("customerId") UUID customerId){
+		services.delete(customerId);
+		return new ResponseEntity<Object>( HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("list")
 	public ResponseEntity<List<Customer>> listCustomers(){
-		return services.findAll();
+		return new ResponseEntity<List<Customer>>(services.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{customerCpf}")
 	public ResponseEntity<Customer> findByCpf(@PathVariable("customerCpf") String customerCpf){
-		return services.findByCpf(customerCpf);
+		return new ResponseEntity<Customer>(services.findByCpf(customerCpf), HttpStatus.OK);
 	}
 	
 	@GetMapping
 	public ResponseEntity<List<Customer>> findByNeighborhood(@RequestParam("neighborhood") String neighborhood){
-		return services.findByNeighborhood(neighborhood);
+		return new ResponseEntity<List<Customer>>(services.findByNeighborhood(neighborhood), HttpStatus.OK);
 	}
 }
