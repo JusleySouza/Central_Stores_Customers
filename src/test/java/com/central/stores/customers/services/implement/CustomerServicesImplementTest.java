@@ -43,9 +43,6 @@ class CustomerServicesImplementTest {
 	private CustomersServicesImplement services;
 	
 	@Mock
-	private CustomerMapper mapper;
-	
-	@Mock
 	private Validator mockValidator;
 	
 	@Mock
@@ -126,7 +123,6 @@ class CustomerServicesImplementTest {
 		customer = Cryptography.encode(customer);
 		customer.setActive(false);
 		when(repository.findById(any())).thenReturn(Optional.of(customer));
-		when(mapper.customerDelete(any())).thenReturn(customer);
 		Customer customers = (Customer) services.delete(UUID.randomUUID());
 		assertTrue(customers.getActive().equals(false));
 	}
@@ -147,8 +143,6 @@ class CustomerServicesImplementTest {
 	
 	@Test
 	public void create() {
-		when(mapper.toModel(any())).thenReturn(customer);
-		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		ResponseEntity<Object>  customer = services.create(requestCustomerDTO);
 		assertTrue(customer.getStatusCode().equals(HttpStatus.CREATED));
 	}
@@ -170,9 +164,6 @@ class CustomerServicesImplementTest {
 	@Test
 	public void createDuplicateDocumentsException() {
 		String messageError = "Documents already registered";
-		
-		when(mapper.toModel(any())).thenReturn(customer);
-		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		when(repository.findByRg(anyString())).thenReturn(customer);
 		when(repository.findByCpf(anyString())).thenReturn(customer);
 		
@@ -186,9 +177,6 @@ class CustomerServicesImplementTest {
 	@Test
 	public void createWithDuplicateCpf() {
 		String messageError = "Cpf already registered";
-		
-		when(mapper.toModel(any())).thenReturn(customer);
-		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		when(repository.findByCpf(anyString())).thenReturn(customer);
 		
 		String message = assertThrows(DuplicateDocumentsException.class, () -> {
@@ -201,9 +189,6 @@ class CustomerServicesImplementTest {
 	@Test
 	public void createWithDuplicateRg() {
 		String messageError = "Rg already registered";
-		
-		when(mapper.toModel(any())).thenReturn(customer);
-		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		when(repository.findByRg(anyString())).thenReturn(customer);
 		
 		String message = assertThrows(DuplicateDocumentsException.class, () -> {
@@ -216,7 +201,6 @@ class CustomerServicesImplementTest {
 	@Test
 	public void update() {
 		when(repository.findById(any())).thenReturn(Optional.of(customer));
-		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		
 		ResponseEntity<Object> customer = services.update(requestCustomerDTO, UUID.randomUUID());
 		assertTrue(customer.getStatusCode().equals(HttpStatus.NO_CONTENT));
@@ -227,7 +211,6 @@ class CustomerServicesImplementTest {
 		String messageError = "No records found for this id!!";
 		
 		when(repository.findById(any())).thenReturn(Optional.ofNullable(null));
-		when(mapper.modelToResponseCustomerDTO(any())).thenReturn(responseCustomerDTO);
 		
 		String message = assertThrows(ResourceNotFoundException.class, () -> {
 			services.update(requestCustomerDTO, UUID.randomUUID());

@@ -23,7 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.central.stores.customers.exception.ResourceNotFoundException;
-import com.central.stores.customers.mapper.AddressMapper;
 import com.central.stores.customers.model.Address;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.AddressDTO;
@@ -45,9 +44,6 @@ class AddressServicesImplementTest {
 	@Mock
 	private Validator mockValidator;
 	
-	@Mock
-	private AddressMapper mapper;
-	
 	private Address address;
 	private Customer customer;
 	private AddressDTO addressDTO;
@@ -68,7 +64,6 @@ class AddressServicesImplementTest {
 
 	@Test
 	public void create() {
-		when(mapper.toModel(any())).thenReturn(address);
 		when(customerRepository.findById(any())).thenReturn(Optional.of(customer));
 		ResponseEntity<Object>  address = services.create(addressDTO, UUID.randomUUID());
 		assertTrue(address.getStatusCode().equals(HttpStatus.CREATED));
