@@ -22,6 +22,12 @@ class ResponseCustomerDTOTest {
 	}
 
 	@Test
+	void builder() {
+		ResponseCustomerDTO responseCustomerDTO = ResponseCustomerDTO.builder().name("Caio Castro").id(id).build();
+		assertEquals(expectedResponseCustomerDTO.toString(), responseCustomerDTO.toString());
+	}
+	
+	@Test
 	void setter() {
 		ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
 		responseCustomerDTO.setName("Caio Castro");

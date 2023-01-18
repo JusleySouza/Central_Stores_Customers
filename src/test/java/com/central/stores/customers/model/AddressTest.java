@@ -21,6 +21,20 @@ class AddressTest {
 		expectedAddress = ClassBuilder.addressBuilder();
 		expectedAddress.setId(id);
 	}
+	
+	@Test
+	void build() {
+		Address address = Address.builder()
+				.city("Bauru")
+				.neighborhood("Pedro Santos Drumond")
+				.number(56)
+				.street("Rua das Amelias")
+				.changed(LocalDate.now())
+				.created(LocalDate.now())
+				.id(id)
+				.build();
+		assertEquals(expectedAddress.toString(), address.toString());
+	}
 
 	@Test
 	void setter() {

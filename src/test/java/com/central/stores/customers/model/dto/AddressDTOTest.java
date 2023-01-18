@@ -15,6 +15,13 @@ class AddressDTOTest {
 	void setUp() throws Exception {
 		expectedAddressDTO = ClassBuilder.addressDTOBuilder();
 	}
+	
+	@Test
+	void builder() {
+		AddressDTO addressDTO = AddressDTO.builder().city("Bauru").neighborhood("Pedro Santos Drumond").number(56)
+				.street("Rua das Amelias").build();
+		assertEquals(expectedAddressDTO.toString(), addressDTO.toString());
+	}
 
 	@Test
 	void setter() {
