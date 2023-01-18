@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.central.stores.customers.config.LoggerConfig;
 import com.central.stores.customers.exception.ResourceNotFoundException;
 import com.central.stores.customers.mapper.AddressMapper;
-import com.central.stores.customers.mapper.UpdateModel;
 import com.central.stores.customers.model.Address;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.AddressDTO;
@@ -31,9 +30,6 @@ public class AddressServicesImplement implements AddressServices {
 
 	@Autowired
 	private AddressRepository addressRepository;
-
-	@Autowired
-	private AddressMapper mapper;
 	
 	@Autowired
 	private Validator validator;
@@ -51,13 +47,13 @@ public class AddressServicesImplement implements AddressServices {
 					HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
-		address = mapper.toModel(requestAddressDTO);
+		address = AddressMapper.toModel(requestAddressDTO);
 		addressRepository.save(address);
 		customer = customerRepository.findById(customerId).get();
 		customer.setAddress(address);
 		customerRepository.save(customer);
 		LoggerConfig.LOGGER_ADDRESS.info("Customer address " + customer.getName() + " saved successfully!!");
-		return new ResponseEntity<Object>(address, HttpStatus.CREATED);
+		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 
 	@Override
@@ -73,7 +69,7 @@ public class AddressServicesImplement implements AddressServices {
 		address = addressRepository.findById(addressId).orElseThrow(() ->
 		new ResourceNotFoundException("No records found for this id!!")
 		);
-		address = UpdateModel.address(address, requestAddressDTO);
+		address = AddressMapper.updateAddress(address, requestAddressDTO);
 		addressRepository.save(address);
 		LoggerConfig.LOGGER_ADDRESS.info("Address successfully updated!!");
 		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
