@@ -1,6 +1,6 @@
 package com.central.stores.customers.model.dto;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.UUID;
 
@@ -23,7 +23,10 @@ class ResponseCustomerDTOTest {
 
 	@Test
 	void builder() {
-		ResponseCustomerDTO responseCustomerDTO = ResponseCustomerDTO.builder().name("Caio Castro").id(id).build();
+		ResponseCustomerDTO responseCustomerDTO = ResponseCustomerDTO.builder()
+				.name("Caio Castro")
+				.id(id)
+				.build();
 		assertEquals(expectedResponseCustomerDTO.toString(), responseCustomerDTO.toString());
 	}
 	
