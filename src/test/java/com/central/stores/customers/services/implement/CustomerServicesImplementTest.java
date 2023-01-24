@@ -29,10 +29,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import com.central.stores.customers.crypto.Cryptography;
 import com.central.stores.customers.exception.DuplicateDocumentsException;
 import com.central.stores.customers.exception.ResourceNotFoundException;
-import com.central.stores.customers.mapper.CustomerMapper;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
-import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.repository.CustomersRepository;
 import com.central.stores.customers.test.utils.ClassBuilder;
 
@@ -50,7 +48,6 @@ class CustomerServicesImplementTest {
 	
 	private Customer customer;
 	private RequestCustomerDTO requestCustomerDTO;
-	private ResponseCustomerDTO responseCustomerDTO;
 	private LocalValidatorFactoryBean validator;
 	private Set<ConstraintViolation<Object>> violations;
 	
@@ -59,7 +56,6 @@ class CustomerServicesImplementTest {
 		MockitoAnnotations.openMocks(this);
 		customer = ClassBuilder.customerBuilder();
 		requestCustomerDTO = ClassBuilder.requestCustomerDTOBuilder();
-		responseCustomerDTO = ClassBuilder.responseCustomerDTOBuilder();
 		
 		validator = new LocalValidatorFactoryBean();
 		validator.afterPropertiesSet();
