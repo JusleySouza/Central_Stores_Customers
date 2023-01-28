@@ -1,20 +1,21 @@
 package com.central.stores.customers.services;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.central.stores.customers.model.Customer;
+import com.central.stores.customers.model.dto.ListCustomer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
+import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 
 @Service
 public interface CustomersServices {
 
-	public List<Customer> findAll();
+	public ListCustomer findAll(Integer pageSize, Integer page, String sortBy);
 
-	public Customer findByCpf(String cpf);
+	public ResponseCustomerDTO findByCpf(String cpf);
 
 	public ResponseEntity<Object> create(RequestCustomerDTO requestCustomerDTO);
 
@@ -22,6 +23,6 @@ public interface CustomersServices {
 
 	public Customer delete(UUID id);
 	
-	public List<Customer> findByNeighborhood(String neighborhood);
+	public ListCustomer findByNeighborhood(String neighborhood, Integer pageSize, Integer page, String sortBy);
 
 }
