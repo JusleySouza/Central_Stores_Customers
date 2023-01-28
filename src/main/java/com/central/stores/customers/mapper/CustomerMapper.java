@@ -3,8 +3,10 @@ package com.central.stores.customers.mapper;
 import java.time.LocalDate;
 
 import com.central.stores.customers.model.Customer;
+import com.central.stores.customers.model.dto.AddressDTO;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
+import com.central.stores.customers.model.dto.ResponseSumarizedCustomerDTO;
 
 public final class CustomerMapper {
 
@@ -27,10 +29,23 @@ public final class CustomerMapper {
 		return customer;
 	}
 	
+	public static ResponseSumarizedCustomerDTO modelToResponseSumarizedCustomerDTO(Customer customer) {
+		return ResponseSumarizedCustomerDTO.builder()
+				.id(customer.getId())
+				.name(customer.getName())
+				.build();
+	}
+	
 	public static ResponseCustomerDTO modelToResponseCustomerDTO(Customer customer) {
 		return ResponseCustomerDTO.builder()
 				.id(customer.getId())
 				.name(customer.getName())
+				.cpf(customer.getCpf())
+				.rg(customer.getRg())
+				.gender(customer.getGender())
+				.phone(customer.getPhone())
+				.email(customer.getEmail())
+				.address(addressIsNull(customer))
 				.build();
 	}
 	
@@ -45,4 +60,11 @@ public final class CustomerMapper {
 		return customer;
 	}
 	
+	private static AddressDTO addressIsNull(Customer customer) {
+		AddressDTO addressDTO = null;
+		if(customer.getAddress() != null) {
+			addressDTO = AddressMapper.toDTO(customer.getAddress());
+		}
+		return addressDTO;
+	}
 }
