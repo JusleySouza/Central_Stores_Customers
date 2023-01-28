@@ -3,12 +3,15 @@ package com.central.stores.customers.services.implement;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,9 +22,12 @@ import com.central.stores.customers.exception.DuplicateDocumentsException;
 import com.central.stores.customers.exception.ResourceNotFoundException;
 import com.central.stores.customers.mapper.CustomerMapper;
 import com.central.stores.customers.model.Customer;
+import com.central.stores.customers.model.dto.ListCustomer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
+import com.central.stores.customers.model.dto.ResponseSumarizedCustomerDTO;
 import com.central.stores.customers.model.dto.error.ResponseError;
+import com.central.stores.customers.pagination.Pagination;
 import com.central.stores.customers.repository.CustomersRepository;
 import com.central.stores.customers.services.CustomersServices;
 
@@ -36,19 +42,35 @@ public class CustomersServicesImplement implements CustomersServices {
 	
 	private Customer customer;
 	private ResponseCustomerDTO responseCustomerDTO;
+	private ResponseSumarizedCustomerDTO responseSumarizedCustomerDTO;
+	private Page<Customer> pageListResponse;
+	private List<ResponseCustomerDTO> listResponse;
+	private ListCustomer response;
 
 	@Override
 	@Cacheable(cacheNames = "Customers", key = "#root.method.name")
-	public List<Customer> findAll() {
-		List<Customer> listCustomer = repository.findAllByActiveTrue();
-		listCustomer.forEach(customer -> customer = Cryptography.decode(customer));
+	public ListCustomer findAll(Integer pageSize, Integer page, String sortBy) {
+		
+		Pageable pageable = Pagination.createPagination(pageSize, page, sortBy);
+		
+		pageListResponse = repository.findAllByActiveTrue(pageable);
+		
+		pageListResponse.forEach(customer -> customer = Cryptography.decode(customer));
+		
+		listResponse = pageListResponse
+				.stream()
+				.map(customer -> CustomerMapper.modelToResponseCustomerDTO(customer))
+				.collect(Collectors.toList());
+		
+		response = Pagination.paginationCustomer(pageListResponse, listResponse);
+		
 		LoggerConfig.LOGGER_CUSTOMER.info(" Customer List successfully executed!! ");
-		return listCustomer;
+		return response;
 	}
 
 	@Override
 	@Cacheable(cacheNames = "Customers", key = "#cpf")
-	public Customer findByCpf(String cpf) {
+	public ResponseCustomerDTO findByCpf(String cpf) {
 		customer = repository.findByCpf(Cryptography.encodeCpf(cpf));
 		
 		if(customer == null) {
@@ -57,8 +79,9 @@ public class CustomersServicesImplement implements CustomersServices {
 		}
 		
 		customer = Cryptography.decode(customer);
+		responseCustomerDTO = CustomerMapper.modelToResponseCustomerDTO(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Customer found successfully!! ");
-		return customer;
+		return responseCustomerDTO;
 	}
 
 	@Override
@@ -82,9 +105,9 @@ public class CustomersServicesImplement implements CustomersServices {
 		
 		repository.save(customer);
 		
-		responseCustomerDTO = CustomerMapper.modelToResponseCustomerDTO(customer);
+		responseSumarizedCustomerDTO = CustomerMapper.modelToResponseSumarizedCustomerDTO(customer);
 		LoggerConfig.LOGGER_CUSTOMER.info("Customer " + customer.getName() + " saved successfully!!");
-		return new ResponseEntity<Object>(responseCustomerDTO, HttpStatus.CREATED);
+		return new ResponseEntity<Object>(responseSumarizedCustomerDTO, HttpStatus.CREATED);
 	}
 
 	@Override
@@ -122,17 +145,29 @@ public class CustomersServicesImplement implements CustomersServices {
 
 	@Override
 	@Cacheable(cacheNames = "Customers", key = "#neighborhood")
-	public List<Customer> findByNeighborhood(String neighborhood) {
-		List<Customer> listCustomers = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood);
+	public ListCustomer findByNeighborhood(String neighborhood, Integer pageSize, Integer page, String sortBy) {
 		
-		if(listCustomers.isEmpty()) {
+		Pageable pageable = Pagination.createPagination(pageSize, page, sortBy);
+		
+		pageListResponse = repository.findAllByActiveTrueAndAddressNeighborhood(neighborhood ,pageable);
+		
+		if(pageListResponse.isEmpty()) {
 			LoggerConfig.LOGGER_CUSTOMER.error("No records found for this neighborhood!!");
 			throw new ResourceNotFoundException("No records found for this neighborhood!!");
 		}
 		
-		listCustomers.forEach(customer -> customer = Cryptography.decode(customer));
+		pageListResponse.forEach(customer -> customer = Cryptography.decode(customer));
+		
+		listResponse = pageListResponse
+				.stream()
+				.map(customer -> CustomerMapper.modelToResponseCustomerDTO(customer))
+				.collect(Collectors.toList());
+		
+		response = Pagination.paginationCustomer(pageListResponse, listResponse);
+		
 		LoggerConfig.LOGGER_CUSTOMER.info(" List of Customers by neighborhood successfully executed!! ");
-		return listCustomers;
+		return response;
+		
 	}
 	
 	
