@@ -17,6 +17,15 @@ public final class AddressMapper {
 				.build();
 	}
 	
+	public static AddressDTO toDTO(Address address) {
+		return AddressDTO.builder()
+				.street(address.getStreet())
+				.number(address.getNumber())
+				.neighborhood(address.getNeighborhood())
+				.city(address.getCity())
+				.build();
+	}
+	
 	public static Address updateAddress(Address address, AddressDTO RequestAddressDTO) {
 		address.setStreet(RequestAddressDTO.getStreet());
 		address.setNumber(RequestAddressDTO.getNumber());
