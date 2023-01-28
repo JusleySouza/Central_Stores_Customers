@@ -1,7 +1,8 @@
 package com.central.stores.customers.controller;
 
-import java.util.List;
 import java.util.UUID;
+
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.central.stores.customers.model.Customer;
+import com.central.stores.customers.model.dto.ListCustomer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
+import com.central.stores.customers.model.dto.ResponseCustomerDTO;
 import com.central.stores.customers.services.CustomersServices;
 
 @RestController
@@ -47,17 +49,29 @@ public class CustomerController {
 	}
 	
 	@GetMapping("list")
-	public ResponseEntity<List<Customer>> listCustomers(){
-		return new ResponseEntity<List<Customer>>(services.findAll(), HttpStatus.OK);
+	public ResponseEntity<ListCustomer> listCustomers(
+			@Min(value=1, message = "Tamanho mínimo 1.")
+			@RequestParam(defaultValue = "10" , value="pageSize", required = false) Integer pageSize, 
+			@Min(value=0, message = "Tamanho mínimo 0.")
+			@RequestParam(defaultValue = "0" , value="page", required = false) Integer page, 
+			@RequestParam(defaultValue = "name, DESC" , value="sortBy", required = false) String sortBy
+			){
+		return new ResponseEntity<ListCustomer>(services.findAll(pageSize, page, sortBy), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{customerCpf}")
-	public ResponseEntity<Customer> findByCpf(@PathVariable("customerCpf") String customerCpf){
-		return new ResponseEntity<Customer>(services.findByCpf(customerCpf), HttpStatus.OK);
+	public ResponseEntity<ResponseCustomerDTO> findByCpf(@PathVariable("customerCpf") String customerCpf){
+		return new ResponseEntity<ResponseCustomerDTO>(services.findByCpf(customerCpf), HttpStatus.OK);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Customer>> findByNeighborhood(@RequestParam("neighborhood") String neighborhood){
-		return new ResponseEntity<List<Customer>>(services.findByNeighborhood(neighborhood), HttpStatus.OK);
+	public ResponseEntity<ListCustomer> findByNeighborhood(@RequestParam("neighborhood") String neighborhood,
+			@Min(value=1, message = "Tamanho mínimo 1.")
+			@RequestParam(defaultValue = "10" , value="pageSize", required = false) Integer pageSize, 
+			@Min(value=0, message = "Tamanho mínimo 0.")
+			@RequestParam(defaultValue = "0" , value="page", required = false) Integer page, 
+			@RequestParam(defaultValue = "name, DESC" , value="sortBy", required = false) String sortBy
+			){
+		return new ResponseEntity<ListCustomer>(services.findByNeighborhood(neighborhood, pageSize, page, sortBy), HttpStatus.OK);
 	}
 }
