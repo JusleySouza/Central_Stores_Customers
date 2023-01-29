@@ -9,32 +9,32 @@ import org.junit.jupiter.api.Test;
 
 import com.central.stores.customers.test.utils.ClassBuilder;
 
-class ResponseCustomerDTOTest {
+class ResponseSumarizedCustomerDTOTest {
 	
-	private ResponseCustomerDTO expectedResponseCustomerDTO;
+	private ResponseSumarizedCustomerDTO expectedResponseSumarizedCustomerDTO;
 	private UUID id;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		id = UUID.randomUUID();
-		expectedResponseCustomerDTO = ClassBuilder.responseCustomerDTOBuilder();
-		expectedResponseCustomerDTO.setId(id);
+		expectedResponseSumarizedCustomerDTO = ClassBuilder.responseSumarizedCustomerDTOBuilder();
+		expectedResponseSumarizedCustomerDTO.setId(id);
 	}
 
 	@Test
 	void builder() {
-		ResponseCustomerDTO responseCustomerDTO = ResponseCustomerDTO.builder()
+		ResponseSumarizedCustomerDTO responseSumarizedCustomerDTO = ResponseSumarizedCustomerDTO.builder()
 				.name("Caio Castro")
 				.id(id)
 				.build();
-		assertEquals(expectedResponseCustomerDTO.toString(), responseCustomerDTO.toString());
+		assertEquals(expectedResponseSumarizedCustomerDTO.toString(), responseSumarizedCustomerDTO.toString());
 	}
 	
 	@Test
 	void setter() {
-		ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
-		responseCustomerDTO.setName("Caio Castro");
-		responseCustomerDTO.setId(id);
-		assertEquals(expectedResponseCustomerDTO.toString(), responseCustomerDTO.toString());
+		ResponseSumarizedCustomerDTO responseSumarizedCustomerDTO = new ResponseSumarizedCustomerDTO();
+		responseSumarizedCustomerDTO.setName("Caio Castro");
+		responseSumarizedCustomerDTO.setId(id);
+		assertEquals(expectedResponseSumarizedCustomerDTO.toString(), responseSumarizedCustomerDTO.toString());
 	}
 }
