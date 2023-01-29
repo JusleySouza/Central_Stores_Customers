@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -30,7 +32,10 @@ import com.central.stores.customers.crypto.Cryptography;
 import com.central.stores.customers.exception.DuplicateDocumentsException;
 import com.central.stores.customers.exception.ResourceNotFoundException;
 import com.central.stores.customers.model.Customer;
+import com.central.stores.customers.model.dto.ListCustomer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
+import com.central.stores.customers.model.dto.ResponseCustomerDTO;
+import com.central.stores.customers.pagination.Pagination;
 import com.central.stores.customers.repository.CustomersRepository;
 import com.central.stores.customers.test.utils.ClassBuilder;
 
@@ -48,25 +53,41 @@ class CustomerServicesImplementTest {
 	
 	private Customer customer;
 	private RequestCustomerDTO requestCustomerDTO;
+	private ResponseCustomerDTO responseCustomerDTO;
 	private LocalValidatorFactoryBean validator;
 	private Set<ConstraintViolation<Object>> violations;
+	
+	
+	private Pageable pageable;
+	private Page<Customer> pageCustomer;
+	private Page<Customer> pageCustomerEmpty;
 	
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
+		UUID id = UUID.randomUUID();
 		customer = ClassBuilder.customerBuilder();
 		requestCustomerDTO = ClassBuilder.requestCustomerDTOBuilder();
+		responseCustomerDTO = ClassBuilder.responseCustomerDTOBuilder();
+		
+		customer.setId(id);
+		responseCustomerDTO.setId(id);
+		customer.setAddress(ClassBuilder.addressBuilder());
 		
 		validator = new LocalValidatorFactoryBean();
 		validator.afterPropertiesSet();
+		
+		pageable = Pagination.createPagination(1, 1, "name, DESC");
+		pageCustomerEmpty = new PageImpl<Customer>(List.of(), pageable, 1L);
+		pageCustomer = new PageImpl<Customer>(List.of(customer), pageable, 1L);
 	}
 	
 	@Test
 	public void findByCpf() throws Exception {
 		customer = Cryptography.encode(customer);
 		when(repository.findByCpf(anyString())).thenReturn(customer);
-		Customer cust = services.findByCpf("12365478965");
-		assertEquals(cust, customer);
+		ResponseCustomerDTO cust = services.findByCpf("12365478965");
+		assertEquals(cust.toString(), responseCustomerDTO.toString());
 	}
 	
 	@Test
@@ -86,8 +107,8 @@ class CustomerServicesImplementTest {
 	@Test
 	public void findByNeighborhood() {
 		customer = Cryptography.encode(customer);
-		when(repository.findAllByActiveTrueAndAddressNeighborhood(anyString())).thenReturn(List.of(customer));
-		List<Customer> listCustomers = services.findByNeighborhood("teste");
+		when(repository.findAllByActiveTrueAndAddressNeighborhood(anyString(), any())).thenReturn(pageCustomer);
+		ListCustomer listCustomers = services.findByNeighborhood("teste", 1, 1, "name, DESC");
 		assertNotNull(listCustomers);
 	}
 	
@@ -96,10 +117,10 @@ class CustomerServicesImplementTest {
 		String messageError = "No records found for this neighborhood!!";
 		customer = Cryptography.encode(customer);
 		
-		when(repository.findAllByActiveTrueAndAddressNeighborhood(anyString())).thenReturn(new ArrayList<Customer>());
+		when(repository.findAllByActiveTrueAndAddressNeighborhood(anyString(), any())).thenReturn(pageCustomerEmpty);
 		
 		String message = assertThrows(ResourceNotFoundException.class, () -> {
-			services.findByNeighborhood("teste");
+			services.findByNeighborhood("teste", 1, 1, "name, DESC");
 		}).getMessage();
 		
 		assertEquals(messageError, message);
@@ -108,8 +129,8 @@ class CustomerServicesImplementTest {
 	@Test
 	public void findAll() {
 		customer = Cryptography.encode(customer);
-		when(repository.findAllByActiveTrue()).thenReturn(List.of(customer));
-		List<Customer> customers = services.findAll();
+		when(repository.findAllByActiveTrue(any())).thenReturn(pageCustomer);
+		ListCustomer customers = services.findAll(1, 1, "name, DESC");
 		assertNotNull(customers);
 		
 	}
