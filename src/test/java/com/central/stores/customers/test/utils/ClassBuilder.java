@@ -1,13 +1,17 @@
 package com.central.stores.customers.test.utils;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import com.central.stores.customers.model.Address;
 import com.central.stores.customers.model.Customer;
 import com.central.stores.customers.model.dto.AddressDTO;
+import com.central.stores.customers.model.dto.ListCustomer;
 import com.central.stores.customers.model.dto.RequestCustomerDTO;
 import com.central.stores.customers.model.dto.ResponseCustomerDTO;
+import com.central.stores.customers.model.dto.ResponseSumarizedCustomerDTO;
+import com.central.stores.customers.pagination.PaginationDTO;
 
 public final class ClassBuilder {
 
@@ -58,11 +62,43 @@ public final class ClassBuilder {
 		 return requestCustomerDTO;
 	}
 	
+	public static ResponseSumarizedCustomerDTO responseSumarizedCustomerDTOBuilder() {
+		 ResponseSumarizedCustomerDTO responseSumarizedCustomerDTO = new ResponseSumarizedCustomerDTO();
+		 responseSumarizedCustomerDTO.setName("Caio Castro");
+		 responseSumarizedCustomerDTO.setId(UUID.randomUUID());
+		 return responseSumarizedCustomerDTO;
+	}
+	
 	public static ResponseCustomerDTO responseCustomerDTOBuilder() {
-		 ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
-		 responseCustomerDTO.setName("Caio Castro");
-		 responseCustomerDTO.setId(UUID.randomUUID());
-		 return responseCustomerDTO;
+		ResponseCustomerDTO responseCustomerDTO = new ResponseCustomerDTO();
+		responseCustomerDTO.setId(UUID.randomUUID());
+		responseCustomerDTO.setName("Caio Castro");
+		responseCustomerDTO.setCpf("12365478965");
+		responseCustomerDTO.setRg("325698741");
+		responseCustomerDTO.setGender("masculino");
+		responseCustomerDTO.setPhone("1111111111");
+		responseCustomerDTO.setEmail("caio@castro.com");
+		responseCustomerDTO.setAddress(addressDTOBuilder());
+		return responseCustomerDTO;
+	}
+	
+	public static PaginationDTO paginationBuilder() {
+		PaginationDTO pagination = new PaginationDTO();
+		pagination.setOffset(0);
+		pagination.setPageSize(4);
+		pagination.setPageNumber(1);
+		pagination.setMoreElements(true);
+		pagination.setTotalPages(6);
+	    pagination.setTotalElements(2);
+		return pagination;
+	}
+	
+	public static ListCustomer listCustomerBuilder() {
+		ListCustomer listCustomer = new ListCustomer();
+		listCustomer.setPageable(paginationBuilder());
+		List<ResponseCustomerDTO> listCustomerDTO = List.of(responseCustomerDTOBuilder());
+		listCustomer.setContent(listCustomerDTO);
+		return listCustomer;
 	}
 	
 }
